@@ -14,7 +14,7 @@ public class Main extends Application {
         stg = primaryStage;
         primaryStage.setResizable(false);
         Parent root = FXMLLoader.load(getClass().getResource("login-gui.fxml"));
-        primaryStage.setTitle("BASE FOR DOC");
+        primaryStage.setTitle(" ");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, 700, 400));
         primaryStage.show();
@@ -22,6 +22,7 @@ public class Main extends Application {
     public void changeScene(String fxml) throws Exception{
         Parent parent = FXMLLoader.load(getClass().getResource(fxml));
         stg.getScene().setRoot(parent);
+
     }
 
     public static void main(String[] args) {

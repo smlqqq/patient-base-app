@@ -13,7 +13,7 @@
    <center>
       <AnchorPane prefHeight="400.0" prefWidth="388.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="login_button" layoutX="293.0" layoutY="282.0" mnemonicParsing="false" onAction="#userLogIn" prefHeight="32.0" prefWidth="76.0" text="LOG IN" />
+            <Button fx:id="login_button" layoutX="293.0" layoutY="282.0" mnemonicParsing="false" onAction="#initialize" prefHeight="32.0" prefWidth="76.0" text="LOG IN" />
             <PasswordField fx:id="pass_doc" layoutX="265.0" layoutY="216.0" prefHeight="32.0" prefWidth="208.0" />
             <TextField fx:id="id_doc" layoutX="267.0" layoutY="142.0" prefHeight="32.0" prefWidth="207.0" />
             <Text layoutX="93.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" textAlignment="CENTER" wrappingWidth="123.13671875">

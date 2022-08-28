@@ -1,7 +1,11 @@
 package com.example.patientbaseapp;
 
 
-import com.example.patientbaseapp.Log.LOG;
+
+import com.example.patientbaseapp.DB.Const;
+import com.example.patientbaseapp.DB.Handler;
+//import com.example.patientbaseapp.Domain.Account;
+import com.example.patientbaseapp.Domain.Account;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,6 +21,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
 
 public class Login {
 
@@ -37,27 +45,86 @@ public class Login {
     private Label wrongLogin;
 
 
+
 @FXML
-public void userLogIn(ActionEvent event) throws Exception{
-        checkLogIn();
+void initialize() throws Exception {
+    Main m = new Main();
 
-    }
+login_button.setOnAction(event -> {
 
-    private void checkLogIn()throws Exception{
-        Main m = new Main();
-        if(id_doc.getText().toString().equals(LOG.return_doc()) && pass_doc.getText().toString().equals("asdasdasd")){
-            wrongLogin.setText("Succes");
+
+    String accID = id_doc.getText().trim();
+    String accPass = pass_doc.getText().trim();
+
+
+    if (!accID.equals("") && !accPass.equals("")) {
+        loginAcc(accID, accPass);
+
             m.changeScene("after_login.fxml");
-        }
 
-        else if(id_doc.getText().isEmpty() && pass_doc.getText().isEmpty()){
-            wrongLogin.setText("Is Empty");
-        }
-        else {
-            wrongLogin.setText("Try again");
-        }
+
+    } else
+        wrongLogin.setText("Wrong");
+
+});
+
+//    checkLogIn();
+
     }
 
+//    private void checkLogIn()throws Exception {
+//
+//
+//
+//
+//        Main m = new Main();
+//
+//        String accID = id_doc.getText().trim();
+//        String accPass = pass_doc.getText().trim();
+//
+//        if (!accID.equals("") && !accPass.equals("")) {
+//            loginAcc(accID,accPass);
+//            try {
+//                m.changeScene("after_login.fxml");
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//        } else
+//            wrongLogin.setText("Wrong");
+//
+//
+//    }
+    private void loginAcc(String id, String password) {
+        Handler databaseHandler = new Handler();
+        Account account = new Account();
+        account.setID(id);
+        account.setPassword(password);
+        ResultSet result = databaseHandler.getAccount(account);
+
+        int counter = 0;
+        try {
+
+
+        while (result.next()) {
+            counter++;
+
+        }
+    }catch (SQLException e){
+
+        }
+        if(counter>=1){
+            wrongLogin.setText("Succes");
+        }
+
+    }
+
+//    private void signUpAccount() {
+//        Handler databaseHandler = new Handler();
+//        String accID = id_doc.getText().trim();
+//        String accPass = pass_doc.getText().trim();
+//        Account account = new Account(accID, accPass);
+//       databaseHandler.getAccount(account);
+//    }
 
 
 //    void initialize() {
