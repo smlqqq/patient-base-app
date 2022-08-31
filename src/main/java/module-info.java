@@ -10,4 +10,5 @@ module com.example.patientbaseapp {
 
     opens com.example.patientbaseapp to javafx.fxml;
     exports com.example.patientbaseapp;
+
 }

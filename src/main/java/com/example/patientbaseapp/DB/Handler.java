@@ -15,28 +15,9 @@ public class Handler   extends  Configs{
        dbConnection = DriverManager.getConnection(connectionString,dbUser,dbPass);
    return dbConnection;
    }
-
-//    public void signUpAcc(Account account) {
-//
-//        String insert = "INSERT INTO " + Const.USER_TABLE + "(" +
-//                Const.USER_ID + "," + Const.USER_PASSWORD + ")" + "VALUES(?,?,?)" ;
-//
-//        try {
-//            PreparedStatement preparedStatement = getDbConnection().prepareStatement(insert);
-//            preparedStatement.setString(1, account.getID());
-//            preparedStatement.setString(2, account.getPassword());
-//            preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//
-//        } catch (ClassNotFoundException e) {
-//
-//        }
-//    }
-    public ResultSet getAccount(Account account){
+       public ResultSet getAccount(Account account){
        ResultSet resultSet = null;
-        String select  = "SELECT * FROM " + Const.USER_TABLE + " WHERE " +
-                Const.USER_ID + "=? AND " + Const.USER_PASSWORD + "=?" ;
-
+        String select = "select * from doc_log_id_password where ID =? AND Password =?";
         try {
             PreparedStatement preparedStatement = getDbConnection().prepareStatement(select);
             preparedStatement.setString(1, account.getID());

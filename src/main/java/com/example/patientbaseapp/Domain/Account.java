@@ -9,7 +9,8 @@ public class Account {
         this.Password = password;
     }
 
-    public Account() {
+
+    public Account(){
 
     }
 
@@ -22,34 +23,12 @@ public class Account {
         this.ID = ID;
     }
 
-    public String getPassword() {
-        return Password;
-    }
-
     public void setPassword(String password) {
         Password = password;
     }
 
+    public String getPassword() {
+        return Password;
+    }
 
-//
-//    private static String idNumber;
-//    private static String passNumber;
-//
-//
-//    public Account(String id, String password) {
-//        this.idNumber = id;
-//        this.passNumber = password;
-//
-//    }
-//
-//
-//    public static String getIdNumber() {
-//
-//        return idNumber;
-//    }
-//
-//    public static String getPassNumber() {
-//
-//        return passNumber;
-//    }
 }
