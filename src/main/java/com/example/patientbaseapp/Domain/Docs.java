@@ -1,26 +1,26 @@
 package com.example.patientbaseapp.Domain;
 
-public class Account {
-    private String ID;
+public class Docs {
+    private String Login;
     private String Password;
 
-    public Account(String ID, String password) {
-        this.ID = ID;
+    public Docs(String login, String password) {
+        this.Login = login;
         this.Password = password;
     }
 
 
-    public Account(){
+    public Docs(){
 
     }
 
 
-    public String getID() {
-        return ID;
+    public String getLogin() {
+        return Login;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setLogin(String login) {
+        this.Login = login;
     }
 
     public void setPassword(String password) {

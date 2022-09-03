@@ -1,6 +1,6 @@
 package com.example.patientbaseapp;
 import com.example.patientbaseapp.DB.Handler;
-import com.example.patientbaseapp.Domain.Account;
+import com.example.patientbaseapp.Domain.Docs;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -35,11 +35,11 @@ public class Login {
     @FXML
     void initialize() {
         login_button.setOnAction(event -> {
-            String accID = id_doc.getText().trim();
+            String accLogin = id_doc.getText().trim();
             String accPass = pass_doc.getText().trim();
-            if (!accID.equals("") && !accPass.equals("")) {
+            if (!accLogin.equals("") && !accPass.equals("")) {
                 try {
-                    loginAcc(accID, accPass);
+                    loginAcc(accLogin, accPass);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
@@ -52,12 +52,12 @@ public class Login {
     }
 
 
-    private void loginAcc(String logID, String pass) throws SQLException {
+    private void loginAcc(String logLogin, String pass) throws SQLException {
         Handler databaseHandler = new Handler();
-        Account account = new Account();
-        account.setID(logID);
-        account.setPassword(pass);
-        ResultSet result = databaseHandler.getAccount(account);
+        Docs docs = new Docs();
+        docs.setLogin(logLogin);
+        docs.setPassword(pass);
+        ResultSet result = databaseHandler.getAccount(docs);
         if (result.next()) {
             newScene("after_login.fxml");
         } else {
