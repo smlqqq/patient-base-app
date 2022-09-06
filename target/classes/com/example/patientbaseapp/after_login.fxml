@@ -20,7 +20,7 @@
               </columns>
             </TableView>
             <TextArea fx:id="getPatientDiagnosis" layoutX="301.0" prefHeight="501.0" prefWidth="778.0" AnchorPane.leftAnchor="301.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Button fx:id="pateintReloadDB" layoutX="506.0" layoutY="564.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="97.0" text="Reload" />
+            <Button fx:id="pateintReloadDB" layoutX="506.0" layoutY="564.0" mnemonicParsing="false" onAction="#PatientData" prefHeight="54.0" prefWidth="97.0" text="Reload" />
             <Button fx:id="patientAdd" layoutX="690.0" layoutY="564.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="97.0" text="Add" />
          </children>
       </AnchorPane>

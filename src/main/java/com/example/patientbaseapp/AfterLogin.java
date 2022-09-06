@@ -2,15 +2,19 @@ package com.example.patientbaseapp;
 
 import com.example.patientbaseapp.DB.Configs;
 import com.example.patientbaseapp.DB.Handler;
+import com.example.patientbaseapp.Domain.Patinets;
 import javafx.beans.property.SimpleStringProperty;
+
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -23,16 +27,28 @@ public class AfterLogin  extends Configs {
     private ObservableList<ObservableList> data;
     @FXML
     private TableView getPatientTable;
+    @FXML
+    private Button pateintReloadDB;
+    @FXML
+    private TableColumn<Patinets, Integer>patientID;
+    @FXML
+    private TableColumn<Patinets, String> patientName;
+    @FXML
+    private TableColumn<Patinets, String> patientSurname;
+
+    @FXML
+    private TableColumn<Patinets, String> patientAge;
+    @FXML
+    private TextArea getPatientDiagnosis;
+
     public void PatientData(ActionEvent e) throws Exception {
         //TableView
         getPatientTable = new TableView();
-        getPatient();
+        pateintReloadDB.setOnAction(actionEvent ->{
+            getPatient();
+    });
 
-        //Main Scene
-        Scene scene = new Scene(getPatientTable);
 
-        stage.setScene(scene);
-        stage.show();
     }
 
     Connection dbConnection;
@@ -51,9 +67,9 @@ public class AfterLogin  extends Configs {
     public void getPatient() {
         data = FXCollections.observableArrayList();
         try {
-            String select = "select * from patients  where ID =? AND first_name =? AND last_name =? AND date_of_birth(age) =? AND diagnosis =?";
+            String selectPatients = "select * from patients";
 
-            ResultSet rs = getDbConnection().createStatement().executeQuery(select);
+            ResultSet rs = getDbConnection().createStatement().executeQuery(selectPatients);
 
             for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
                 //We are using non property style for making dynamic table
@@ -75,10 +91,11 @@ public class AfterLogin  extends Configs {
                     //Iterate Column
                     row.add(rs.getString(i));
                 }
-
+                System.out.println("Row [1] added "+row );
                 data.add(row);
 
             }
+            getPatientTable.setItems(data);
 
 
         } catch (SQLException e) {
