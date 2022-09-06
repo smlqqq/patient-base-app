@@ -21,19 +21,7 @@ public class Login {
 
     }
 
-    @FXML
-    private Button pateintReloadDB;
-    @FXML
-    private TableView<Patinets> getPatientTable;
-    @FXML
-    private TableColumn<Patinets, String> patientName;
-    @FXML
-    private TableColumn<Patinets, String> patientSurname;
 
-    @FXML
-    private TableColumn<Patinets, String> patientAge;
-    @FXML
-    private TextArea getPatientDiagnosis;
 
 
     @FXML
