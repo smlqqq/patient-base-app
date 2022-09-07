@@ -1,6 +1,7 @@
 package com.example.patientbaseapp;
 import com.example.patientbaseapp.DB.Handler;
 import com.example.patientbaseapp.Domain.Docs;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -59,7 +60,7 @@ public class Login {
         docs.setPassword(pass);
         ResultSet result = databaseHandler.getAccount(docs);
         if (result.next()) {
-            newScene("after_login.fxml");
+            newScene("patients.fxml");
         } else {
 
         }
@@ -76,5 +77,20 @@ public class Login {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.showAndWait();
+    }
+
+    public void searchPatients(ActionEvent actionEvent) {
+    }
+
+    public void deletePatient(ActionEvent actionEvent) {
+    }
+
+    public void updateEmployeeEmail(ActionEvent actionEvent) {
+    }
+
+    public void insertPatient(ActionEvent actionEvent) {
+    }
+
+    public void searchPatient(ActionEvent actionEvent) {
     }
 }

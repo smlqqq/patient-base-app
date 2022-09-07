@@ -18,7 +18,7 @@ public class Handler extends Configs{
     }
     public ResultSet getAccount(Docs docs){
         ResultSet resultSet = null;
-        String select = "select * from hospital.docs where login =? AND password =?";
+        String select = "select * from hospital_db.docs where login =? AND password =?";
 
 
         try {
