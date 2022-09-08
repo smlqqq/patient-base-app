@@ -1,6 +1,5 @@
 package com.example.patientbaseapp.DB;
 import com.example.patientbaseapp.Domain.Account;
-import com.example.patientbaseapp.Domain.Patinets;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,11 +14,11 @@ public class Handler   extends  Configs{
     Connection dbConnection;
    public  Connection getDbConnection() throws ClassNotFoundException , SQLException{
 
-       String connectionString = "jdbc:mysql://" + dbHost + ":"
+       String connectionString = "jdbc:postgresql://" + dbHost + ":"
                + dbPort + "/" + dbName;
 
 
-       Class.forName("com.mysql.cj.jdbc.Driver");
+       Class.forName("org.postgres.Driver");
        dbConnection = DriverManager.getConnection(connectionString,dbUser,dbPass);
    return dbConnection;
    }
@@ -27,10 +26,11 @@ public class Handler   extends  Configs{
 
        public ResultSet getAccount(Account account){
        ResultSet resultSet = null;
-        String select = "select * from docs  where ID =? AND password =?";
+//        String select = "select * from hospital_db  where login =? AND password =?";
+          String getSelect = "SELECT * FROM ckkttdhb.hospital_db.docs where login =? AND password =?";
         try {
-            PreparedStatement preparedStatement = getDbConnection().prepareStatement(select);
-            preparedStatement.setString(1, account.getID());
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(getSelect);
+            preparedStatement.setString(1, account.getLogin());
             preparedStatement.setString(2, account.getPassword());
            resultSet = preparedStatement.executeQuery();
         } catch (SQLException | ClassNotFoundException e) {
@@ -40,13 +40,14 @@ public class Handler   extends  Configs{
     }
 
 
-    public void setAccount (String setID, String setPass) {
+    public void setAccount (String setLogin, String setPass) {
 
-        String setSelect = "insert into docs (ID,password)VALUES (?,?)";
+        String setSelect = "insert into ckkttdhb.hospital_db.docs (login,password)VALUES (?,?)";
+
 
         try {
             PreparedStatement preparedStatement = getDbConnection().prepareStatement(setSelect);
-            preparedStatement.setString(1, setID);
+            preparedStatement.setString(1, setLogin);
             preparedStatement.setString(2, setPass);
             preparedStatement.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
@@ -80,7 +81,7 @@ public class Handler   extends  Configs{
     public void getPatient() {
         data = FXCollections.observableArrayList();
         try {
-            String select = "select * from patients  where ID =? AND first_name =? AND last_name =? AND date_of_birth(age) =? AND diagnosis =?";
+            String select = "SELECT * FROM ckkttdhb.hospital_db.patients  where id =? AND first_name =? AND second_name =? AND date_of_birth =? AND diagnosis =?";
 
             ResultSet rs = dbConnection.createStatement().executeQuery(select);
 
@@ -137,15 +138,15 @@ public class Handler   extends  Configs{
 
     public void setPatient(String setFirstName, String setLastName, String setDayOfBirth, String setDiagnosis) {
 
-        String setSelect = "insert into patients (first_name,last_name,date_of_birth(age),diagnosis)VALUES (?,?,?,?)";
+        String setSelect = "insert into patients (first_name,second_name,date_of_birth,diagnosis)VALUES (?,?,?,?)";
 
         try {
             PreparedStatement preparedStatement = getDbConnection().prepareStatement(setSelect);
 
-            preparedStatement.setString(2, setFirstName);
-            preparedStatement.setString(3, setLastName);
-            preparedStatement.setString(4, setDayOfBirth);
-            preparedStatement.setString(5, setDiagnosis);
+            preparedStatement.setString(1, setFirstName);
+            preparedStatement.setString(2, setLastName);
+            preparedStatement.setString(3, setDayOfBirth);
+            preparedStatement.setString(4, setDiagnosis);
             preparedStatement.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
 

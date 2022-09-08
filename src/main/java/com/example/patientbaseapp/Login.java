@@ -1,11 +1,8 @@
 package com.example.patientbaseapp;
 import com.example.patientbaseapp.DB.Handler;
 import com.example.patientbaseapp.Domain.Account;
-import com.example.patientbaseapp.Domain.Patinets;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -83,10 +80,10 @@ public class Login {
 
 
 
-    private void loginAcc(String logID, String pass) throws SQLException {
+    private void loginAcc(String login, String pass) throws SQLException {
         Handler databaseHandler = new Handler();
         Account account = new Account();
-        account.setID(logID);
+        account.setLogin(login);
         account.setPassword(pass);
         ResultSet result = databaseHandler.getAccount(account);
         if (result.next()) {

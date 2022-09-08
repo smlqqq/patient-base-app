@@ -2,18 +2,18 @@ package com.example.patientbaseapp.Domain;
 
 import javafx.beans.property.StringProperty;
 
-public class Patinets {
-    private String ID;
+public class Patients {
+    private Integer ID;
     private StringProperty firstName;
     private StringProperty  lastName;
     private StringProperty  dayOfBirth;
     private StringProperty  diagnosis;
 
-    public String getID() {
+    public Integer getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 
@@ -65,7 +65,7 @@ public class Patinets {
         this.diagnosis.set(diagnosis);
     }
 
-    public Patinets(String ID, StringProperty firstName, StringProperty lastName, StringProperty dayOfBirth, StringProperty diagnosis) {
+    public Patients(Integer ID, StringProperty firstName, StringProperty lastName, StringProperty dayOfBirth, StringProperty diagnosis) {
         this.ID = ID;
         this.firstName = firstName;
         this.lastName = lastName;
