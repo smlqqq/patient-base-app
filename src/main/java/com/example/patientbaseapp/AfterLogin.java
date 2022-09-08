@@ -1,27 +1,19 @@
 package com.example.patientbaseapp;
 
 import com.example.patientbaseapp.DB.Configs;
-import com.example.patientbaseapp.DB.Handler;
-import com.example.patientbaseapp.Domain.Patinets;
-import javafx.beans.property.SimpleStringProperty;
+import com.example.patientbaseapp.Domain.Patients;
 
+
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
 import javafx.util.Callback;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class AfterLogin  extends Configs {
     private ObservableList<ObservableList> data;
@@ -30,46 +22,69 @@ public class AfterLogin  extends Configs {
     @FXML
     private Button pateintReloadDB;
     @FXML
-    private TableColumn<Patinets, Integer>patientID;
+    private TableColumn<Patients, Integer> patientID;
     @FXML
-    private TableColumn<Patinets, String> patientName;
+    private TableColumn<Patients, String> patientName;
     @FXML
-    private TableColumn<Patinets, String> patientSurname;
+    private TableColumn<Patients, String> patientSurname;
 
     @FXML
-    private TableColumn<Patinets, String> patientAge;
+    private TableColumn<Patients, String> patientAge;
     @FXML
     private TextArea getPatientDiagnosis;
 
     public void PatientData(ActionEvent e) throws Exception {
-        //TableView
-        getPatientTable = new TableView();
-        pateintReloadDB.setOnAction(actionEvent ->{
-            getPatient();
-    });
+
+
+        pateintReloadDB.setOnAction(actionEvent -> {
+            try {
+                getPatient();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
 
     }
 
     Connection dbConnection;
-    public  Connection getDbConnection() throws ClassNotFoundException , SQLException{
 
-        String connectionString = "jdbc:mysql://" + dbHost + ":"
+    public Connection getDbConnection() throws ClassNotFoundException, SQLException {
+
+        String connectionString = "jdbc:postgresql://" + dbHost + ":"
                 + dbPort + "/" + dbName;
 
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
+        Class.forName("org.postgres.Driver");
         dbConnection = DriverManager.getConnection(connectionString,dbUser,dbPass);
         return dbConnection;
     }
 
 
-    public void getPatient() {
+
+    public void getPatient() throws SQLException, ClassNotFoundException {
+        Connection c = getDbConnection();
         data = FXCollections.observableArrayList();
+//        ObservableList<String> row = FXCollections.observableArrayList();
+//        try{
+//            PreparedStatement preparedStatement = c.prepareStatement("select * from patients");
+//            ResultSet rs = preparedStatement.executeQuery();
+//            while(rs.next()) {
+//                row.add(new Patinets(Integer.parseInt(rs.getString("ID")), rs.getString("Name"), rs.getString(""));
+//
+//            }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+
+
         try {
-            String selectPatients = "select * from patients";
+            String selectPatients = "SELECT * FROM ckkttdhb.hospital_db.patients";
 
             ResultSet rs = getDbConnection().createStatement().executeQuery(selectPatients);
+
 
             for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
                 //We are using non property style for making dynamic table
@@ -80,9 +95,11 @@ public class AfterLogin  extends Configs {
                         return new SimpleStringProperty(param.getValue().get(j).toString());
                     }
                 });
+
+
                 getPatientTable.getColumns().addAll(col);
-                System.out.println("Column [" + i + "] ");
             }
+
 
             while(rs.next()){
                 //Iterate Row
@@ -91,7 +108,7 @@ public class AfterLogin  extends Configs {
                     //Iterate Column
                     row.add(rs.getString(i));
                 }
-                System.out.println("Row [1] added "+row );
+
                 data.add(row);
 
             }
