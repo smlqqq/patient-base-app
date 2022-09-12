@@ -18,16 +18,16 @@ public class Handler   extends  Configs{
                + dbPort + "/" + dbName;
 
 
-       Class.forName("org.postgres.Driver");
+       Class.forName("org.postgresql.Driver");
        dbConnection = DriverManager.getConnection(connectionString,dbUser,dbPass);
-   return dbConnection;
+       return dbConnection;
    }
 
 
        public ResultSet getAccount(Account account){
        ResultSet resultSet = null;
 //        String select = "select * from hospital_db  where login =? AND password =?";
-          String getSelect = "SELECT * FROM ckkttdhb.hospital_db.docs where login =? AND password =?";
+          String getSelect = "SELECT * FROM hospital_db.docs where login =? AND password =?";
         try {
             PreparedStatement preparedStatement = getDbConnection().prepareStatement(getSelect);
             preparedStatement.setString(1, account.getLogin());
@@ -40,21 +40,23 @@ public class Handler   extends  Configs{
     }
 
 
-    public void setAccount (String setLogin, String setPass) {
-
-        String setSelect = "insert into ckkttdhb.hospital_db.docs (login,password)VALUES (?,?)";
-
-
-        try {
-            PreparedStatement preparedStatement = getDbConnection().prepareStatement(setSelect);
-            preparedStatement.setString(1, setLogin);
-            preparedStatement.setString(2, setPass);
-            preparedStatement.executeUpdate();
-        } catch (SQLException | ClassNotFoundException e) {
-
-        }
-
-    }
+//    public void setAccount (String setLogin, String setPass, String setName, String setSurName) {
+//
+//        String setSelect = "INSERT INTO hospital_db.docs (login,password,first_name,second_name)VALUES (?,?,?,?)";
+//
+//
+//        try {
+//            PreparedStatement preparedStatement = getDbConnection().prepareStatement(setSelect);
+//            preparedStatement.setString(1, setLogin);
+//            preparedStatement.setString(2, setPass);
+//            preparedStatement.setString(3, setName);
+//            preparedStatement.setString(4, setSurName);
+//            preparedStatement.executeUpdate();
+//        } catch (SQLException | ClassNotFoundException e) {
+//
+//        }
+//
+//    }
 
 
 
@@ -81,7 +83,7 @@ public class Handler   extends  Configs{
     public void getPatient() {
         data = FXCollections.observableArrayList();
         try {
-            String select = "SELECT * FROM ckkttdhb.hospital_db.patients  where id =? AND first_name =? AND second_name =? AND date_of_birth =? AND diagnosis =?";
+            String select = "SELECT * FROM hospital_db.patients  where id =? AND first_name =? AND second_name =? AND day_of_birth =? AND diagnosis =?";
 
             ResultSet rs = dbConnection.createStatement().executeQuery(select);
 
@@ -138,7 +140,7 @@ public class Handler   extends  Configs{
 
     public void setPatient(String setFirstName, String setLastName, String setDayOfBirth, String setDiagnosis) {
 
-        String setSelect = "insert into patients (first_name,second_name,date_of_birth,diagnosis)VALUES (?,?,?,?)";
+        String setSelect = "insert into hospital_db.patients (first_name,second_name,day_of_birth,diagnosis)VALUES (?,?,?,?)";
 
         try {
             PreparedStatement preparedStatement = getDbConnection().prepareStatement(setSelect);

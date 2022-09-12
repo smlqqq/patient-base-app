@@ -1,6 +1,8 @@
 package com.example.patientbaseapp;
 import com.example.patientbaseapp.DB.Handler;
+
 import com.example.patientbaseapp.Domain.Account;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,10 +25,18 @@ public class Login {
 
     @FXML
     private Button signUp_button;
+
     @FXML
-    private TextField log_id_doc;
+    private TextField login_doc_reg;
+
     @FXML
-    private PasswordField log_pass_doc;
+    private PasswordField password_doc_reg;
+
+    @FXML
+    private TextField name_doc_reg;
+
+    @FXML
+    private TextField surname_doc_reg;
 
     @FXML
     private Button login_button;
@@ -38,7 +48,10 @@ public class Login {
     private PasswordField pass_doc;
 
     @FXML
-    private Label wrongLogin;
+    private Button Reg_btn;
+
+    @FXML
+    private Button back_btn;
 
 
     Connection connection = null;
@@ -67,15 +80,26 @@ public class Login {
             }
         });
 
-        Handler handler = new Handler();
-        signUp_button.setOnAction(actionEvent -> {
-        handler.setAccount(id_doc.getText(), pass_doc.getText());
 
-                });
+//
+        Reg_btn.setOnAction(event -> {
+            newScene("registration.fxml");
+
+        });
 
 
+
+
+//            Registration registration = new Registration();
+//            signUp_button.setOnAction(MouseEvent -> {
+//                handler.setAccount(login_doc_reg.getText(), password_doc_reg.getText(), name_doc_reg.getText(), surname_doc_reg.getText());
+//
+//            });
 
     }
+
+
+
 
 
 
@@ -87,7 +111,7 @@ public class Login {
         account.setPassword(pass);
         ResultSet result = databaseHandler.getAccount(account);
         if (result.next()) {
-            infoBox("Login Successfull", "Success", null);
+    //        infoBox("Login Successfull", "Success", null);
             newScene("after_login.fxml");
         } else {
 

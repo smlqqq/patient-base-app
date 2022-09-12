@@ -81,11 +81,8 @@ public class AfterLogin  extends Configs {
 
 
         try {
-            String selectPatients = "SELECT * FROM ckkttdhb.hospital_db.patients";
-
+            String selectPatients = "SELECT * FROM hospital.patients ";
             ResultSet rs = getDbConnection().createStatement().executeQuery(selectPatients);
-
-
             for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
                 //We are using non property style for making dynamic table
                 final int j = i;
