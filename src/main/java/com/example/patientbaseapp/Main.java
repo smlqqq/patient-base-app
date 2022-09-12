@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class Main extends Application {
     public static Stage stg;
 
@@ -19,6 +21,8 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 740, 400));
         primaryStage.show();
     }
+
+
 
     public static void main(String[] args) {
         launch(args);

@@ -83,7 +83,7 @@ public class Login {
 
 //
         Reg_btn.setOnAction(event -> {
-            newScene("registration.fxml");
+            newScene("registrationDoc.fxml");
 
         });
 

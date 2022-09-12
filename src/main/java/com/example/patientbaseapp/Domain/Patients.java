@@ -9,6 +9,9 @@ public class Patients {
     private StringProperty  dayOfBirth;
     private StringProperty  diagnosis;
 
+
+
+
     public Integer getID() {
         return ID;
     }

@@ -5,28 +5,47 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class RegistrationPat extends Configs {
-    @FXML
-    private TextField login_doc_reg;
 
-    @FXML
-    private PasswordField password_doc_reg;
-
-    @FXML
-    private TextField name_doc_reg;
-
-    @FXML
-    private TextField surname_doc_reg;
 
     @FXML
     private Button signUp_button;
+    @FXML
+    private Button regPatientBtn;
+    @FXML
+    private TextField nameText;
+    @FXML
+    private TextField surnameText;
+    @FXML
+    private TextField dateOfBirth;
+    @FXML
+    private TextField diagnosisText;
+    @FXML
+    private Button patientAdd;
+    @FXML
+    private Button backBtn;
+
+
     Connection dbConnection;
+    private String setFirstName;
+    private String setLastName;
+    private String setDayOfBirth;
+    private String setDiagnosis;
+
+
 
     public Connection getDbConnection() throws ClassNotFoundException , SQLException {
 
@@ -57,45 +76,58 @@ public class RegistrationPat extends Configs {
 
     }
 
-    private ObservableList<ObservableList> data;
-    private TableView getPatientTable;
+    @FXML
+    public void initialize(){
 
-    public void getPatient() {
-        data = FXCollections.observableArrayList();
-        try {
-            String select = "SELECT * FROM hospital_db.patients  where id =? AND first_name =? AND second_name =? AND day_of_birth =? AND diagnosis =?";
+        RegistrationPat registration = new RegistrationPat();
+        patientAdd.setOnAction(ActionEvent -> {
+            registration.setPatient(nameText.getText(), surnameText.getText(), dateOfBirth.getText(), diagnosisText.getText());
+            infoBox("Registration Successfull", "Success", null);
 
-            ResultSet rs = dbConnection.createStatement().executeQuery(select);
-
-            for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
-                //We are using non property style for making dynamic table
-                final int j = i;
-                TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
-                col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-                    public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-                        return new SimpleStringProperty(param.getValue().get(j).toString());
-                    }
-                });
-                getPatientTable.getColumns().addAll(col);
-                System.out.println("Column [" + i + "] ");
-            }
-
-            while(rs.next()){
-                //Iterate Row
-                ObservableList<String> row = FXCollections.observableArrayList();
-                for(int i=1 ; i<=rs.getMetaData().getColumnCount(); i++){
-                    //Iterate Column
-                    row.add(rs.getString(i));
-                }
-
-                data.add(row);
-
-            }
+        });
 
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    }
+    public void backStage(ActionEvent e) throws IOException {
+        Stage stage = (Stage) backBtn.getScene().getWindow();
+        // do what you have to do
+        stage.close();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("after_login.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("DB");
+        stage.setScene(new Scene(root1));
+        stage.show();
     }
 
+    public static void infoBox(String infoMessage, String titleBar, String headerMessage)
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titleBar);
+        alert.setHeaderText(headerMessage);
+        alert.setContentText(infoMessage);
+        alert.showAndWait();
+    }
+
+    public void newScene(String window) {
+        signUp_button.getScene().getWindow().hide();
+
+
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource(window));
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {  }
+
+        Parent root = fxmlLoader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
+
+
+
+
 }
+
