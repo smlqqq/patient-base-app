@@ -1,6 +1,7 @@
 package com.example.patientbaseapp;
 
 import com.example.patientbaseapp.DB.Configs;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -69,17 +71,42 @@ public class RegistrationDoc extends Configs {
 
     @FXML
         public void initialize(){
+
         RegistrationDoc registration = new RegistrationDoc();
         signUp_button.setOnAction(ActionEvent -> {
             registration.setAccount(login_doc_reg.getText(), password_doc_reg.getText(), name_doc_reg.getText(), surname_doc_reg.getText());
             infoBox("Registration Successfull", "Success", null);
-            newScene("login-gui.fxml");
+
         });
 
-        back_btn.setOnAction(event -> {
-            newScene2("login-gui.fxml");
-        });
+//        back_btn.setOnAction(event -> {
+//            newScene("login-gui.fxml");
+//        });
     }
+
+    public void setBackBtn(ActionEvent event) throws IOException {
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login-gui.fxml"));
+//        Parent root1 = (Parent) fxmlLoader.load();
+//        Stage stage = new Stage();
+//        stage.initModality(Modality.APPLICATION_MODAL);
+//        stage.setTitle("Вообще другая форма");
+//        stage.setScene(new Scene(root1));
+//        stage.show();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("login-gui.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle("Login");
+        primaryStage.setScene(new Scene(root, 740, 400));
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
+
+
+
 
     public static void infoBox(String infoMessage, String titleBar, String headerMessage)
     {
@@ -92,20 +119,8 @@ public class RegistrationDoc extends Configs {
 
     public void newScene(String window) {
         signUp_button.getScene().getWindow().hide();
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource(window));
-        try {
-            fxmlLoader.load();
-        } catch (IOException e) {  }
-
-        Parent root = fxmlLoader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.showAndWait();
-    }
-
-    public void newScene2 (String window) {
         back_btn.getScene().getWindow().hide();
+
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource(window));
         try {
@@ -117,5 +132,6 @@ public class RegistrationDoc extends Configs {
         stage.setScene(new Scene(root));
         stage.showAndWait();
     }
+
 
 }

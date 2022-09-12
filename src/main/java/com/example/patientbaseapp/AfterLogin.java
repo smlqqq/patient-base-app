@@ -1,6 +1,7 @@
 package com.example.patientbaseapp;
 
 import com.example.patientbaseapp.DB.Configs;
+import com.example.patientbaseapp.DB.Handler;
 import com.example.patientbaseapp.Domain.Patients;
 
 
@@ -10,9 +11,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class AfterLogin  extends Configs {
@@ -27,11 +35,15 @@ public class AfterLogin  extends Configs {
     private TableColumn<Patients, String> patientName;
     @FXML
     private TableColumn<Patients, String> patientSurname;
-
     @FXML
     private TableColumn<Patients, String> patientAge;
     @FXML
     private TextArea getPatientDiagnosis;
+
+    @FXML
+    private Button regPatientBtn;
+    @FXML
+    private Button backBtn;
 
     public void PatientData(ActionEvent e) throws Exception {
 
@@ -39,15 +51,42 @@ public class AfterLogin  extends Configs {
         pateintReloadDB.setOnAction(actionEvent -> {
             try {
                 getPatient();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            } catch (ClassNotFoundException ex) {
+            } catch (SQLException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
         });
 
+//        regPatientBtn.setOnAction(actionEvent->{
+//            newScene("registrationPat.fxml");
+//        });
+
+
 
     }
+
+    public void setPatientsData(ActionEvent e) throws IOException {
+//        regPatientBtn.setOnAction(actionEvent->{
+//            newScene("registrationPat.fxml");
+//        });
+
+        //Close current
+        Stage stage = (Stage) regPatientBtn.getScene().getWindow();
+        // do what you have to do
+        stage.close();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("registrationPat.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Registration Form");
+        stage.setScene(new Scene(root1));
+        stage.show();
+
+    }
+
+
+
+
+
 
     Connection dbConnection;
 
@@ -58,21 +97,21 @@ public class AfterLogin  extends Configs {
 
 
         Class.forName("org.postgres.Driver");
-        dbConnection = DriverManager.getConnection(connectionString,dbUser,dbPass);
+        dbConnection = DriverManager.getConnection(connectionString, dbUser, dbPass);
         return dbConnection;
     }
-
 
 
     public void getPatient() throws SQLException, ClassNotFoundException {
         Connection c = getDbConnection();
         data = FXCollections.observableArrayList();
+
 //        ObservableList<String> row = FXCollections.observableArrayList();
 //        try{
-//            PreparedStatement preparedStatement = c.prepareStatement("select * from patients");
+//            PreparedStatement preparedStatement = c.prepareStatement("SELECT * FROM hospital_db.patients  where id =? AND first_name =? AND second_name =? AND day_of_birth =?");
 //            ResultSet rs = preparedStatement.executeQuery();
 //            while(rs.next()) {
-//                row.add(new Patinets(Integer.parseInt(rs.getString("ID")), rs.getString("Name"), rs.getString(""));
+//                row.add(String.valueOf(new Patients(Integer.parseInt(rs.getString("ID")), rs.getString("Name"), rs.getString("Surname"), rs.getString("Age"))));
 //
 //            }
 //        } catch (SQLException e) {
@@ -80,9 +119,11 @@ public class AfterLogin  extends Configs {
 //        }
 
 
-        try {
-            String selectPatients = "SELECT * FROM hospital.patients ";
-            ResultSet rs = getDbConnection().createStatement().executeQuery(selectPatients);
+       try {
+
+            String selectPatients = "SELECT * FROM hospital_db.patients  where id =? AND first_name =? AND second_name =? AND day_of_birth =?";
+
+            ResultSet rs = c.createStatement().executeQuery(selectPatients);
             for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
                 //We are using non property style for making dynamic table
                 final int j = i;
@@ -114,8 +155,21 @@ public class AfterLogin  extends Configs {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
     }
-}
+    public void newScene(String window) {
+        regPatientBtn.getScene().getWindow().hide();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource(window));
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {  }
+
+        Parent root = fxmlLoader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
+
+    }
+
