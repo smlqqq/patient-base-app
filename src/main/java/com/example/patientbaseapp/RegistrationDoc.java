@@ -84,25 +84,17 @@ public class RegistrationDoc extends Configs {
 //        });
     }
 
-    public void setBackBtn(ActionEvent event) throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login-gui.fxml"));
-//        Parent root1 = (Parent) fxmlLoader.load();
-//        Stage stage = new Stage();
-//        stage.initModality(Modality.APPLICATION_MODAL);
-//        stage.setTitle("Вообще другая форма");
-//        stage.setScene(new Scene(root1));
-//        stage.show();
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("login-gui.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage primaryStage = new Stage();
-        primaryStage.setTitle("Login");
-        primaryStage.setScene(new Scene(root, 740, 400));
-        primaryStage.setResizable(false);
-        primaryStage.show();
+    public void backStage(ActionEvent e) throws IOException {
+        Stage stage = (Stage) back_btn.getScene().getWindow();
+        // do what you have to do
+        stage.close();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login-gui.fxml"));
+        Parent root1 = fxmlLoader.load();
+        stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Login");
+        stage.setScene(new Scene(root1));
+        stage.show();
     }
 
 
