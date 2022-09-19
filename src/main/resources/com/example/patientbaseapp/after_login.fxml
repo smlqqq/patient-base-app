@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,14 +11,7 @@
    <center>
       <AnchorPane prefHeight="700.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="getPatientTable" prefHeight="700.0" prefWidth="403.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="550.0" AnchorPane.topAnchor="0.0">
-              <columns>
-                <TableColumn fx:id="patientID" prefWidth="57.0" text="ID" />
-                <TableColumn fx:id="patientName" prefWidth="132.0" text="Name" />
-                  <TableColumn fx:id="patientSurname" prefWidth="135.0" text="Surname" />
-                  <TableColumn fx:id="patientAge" prefWidth="75.0" text="Age(DOB)" />
-              </columns>
-            </TableView>
+            <TableView fx:id="getPatientTable" prefHeight="700.0" prefWidth="403.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="550.0" AnchorPane.topAnchor="0.0" />
             <TextArea fx:id="getPatientDiagnosis" layoutX="407.0" layoutY="23.0" prefHeight="568.0" prefWidth="533.0" promptText="Diagnosis" AnchorPane.leftAnchor="407.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="23.0" />
             <Button fx:id="pateintReloadDB" layoutX="493.0" layoutY="604.0" mnemonicParsing="false" onAction="#PatientData" prefHeight="54.0" prefWidth="268.0" text="Reload" />
             <Separator layoutX="400.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="7.0" />
