@@ -114,7 +114,7 @@ public class Login {
         ResultSet result = databaseHandler.getAccount(account);
         if (result.next()) {
     //        infoBox("Login Successfull", "Success", null);
-            newScene("after_login.fxml");
+            newScene("after_login(orig).fxml");
         } else {
 
         }
