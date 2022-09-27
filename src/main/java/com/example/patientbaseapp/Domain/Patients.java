@@ -1,29 +1,21 @@
 package com.example.patientbaseapp.Domain;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Patients {
     private Integer ID;
-    private StringProperty firstName;
-    private StringProperty  lastName;
-    private StringProperty  dayOfBirth;
-    private StringProperty  diagnosis;
+    private SimpleStringProperty firstName;
+    private SimpleStringProperty  lastName;
+    private SimpleStringProperty  dayOfBirth;
+    private SimpleStringProperty  diagnosis;
 
-    private int Id;
-    private String firstName1;
-    private String lastName1;
-    private String dayOfBirth1;
-
-
-
-    public Patients(Integer patID, String patName, String patSurName, String patDOB) {
-        this.Id = patID;
-        this.firstName1 = patName;
-        this.lastName1 = patSurName;
-        this.dayOfBirth1 = patDOB;
-
+    public Patients(Integer ID, String firstName, String lastName, String dayOfBirth) {
+        this.ID = ID;
+        this.firstName = new SimpleStringProperty(firstName);
+        this.lastName = new SimpleStringProperty(lastName);
+        this.dayOfBirth = new SimpleStringProperty(dayOfBirth);
     }
-
 
     public Integer getID() {
         return ID;
@@ -37,7 +29,7 @@ public class Patients {
         return firstName.get();
     }
 
-    public StringProperty firstNameProperty() {
+    public SimpleStringProperty firstNameProperty() {
         return firstName;
     }
 
@@ -49,7 +41,7 @@ public class Patients {
         return lastName.get();
     }
 
-    public StringProperty lastNameProperty() {
+    public SimpleStringProperty lastNameProperty() {
         return lastName;
     }
 
@@ -61,7 +53,7 @@ public class Patients {
         return dayOfBirth.get();
     }
 
-    public StringProperty dayOfBirthProperty() {
+    public SimpleStringProperty dayOfBirthProperty() {
         return dayOfBirth;
     }
 
@@ -73,19 +65,11 @@ public class Patients {
         return diagnosis.get();
     }
 
-    public StringProperty diagnosisProperty() {
+    public SimpleStringProperty diagnosisProperty() {
         return diagnosis;
     }
 
     public void setDiagnosis(String diagnosis) {
         this.diagnosis.set(diagnosis);
     }
-
-//    public Patients(Integer ID, StringProperty firstName, StringProperty lastName, StringProperty dayOfBirth, StringProperty diagnosis) {
-//        this.ID = ID;
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.dayOfBirth = dayOfBirth;
-//        this.diagnosis = diagnosis;
-//    }
 }

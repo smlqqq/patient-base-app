@@ -12,16 +12,16 @@
    <center>
       <AnchorPane prefHeight="700.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="getPatientTable" prefHeight="700.0" prefWidth="403.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="550.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="getPatientTable" onMouseClicked="#getPatient" prefHeight="700.0" prefWidth="403.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="550.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn fx:id="patientID" prefWidth="57.0" text="ID" />
-                <TableColumn fx:id="patientName" prefWidth="132.0" text="Name" />
-                  <TableColumn fx:id="patientSurname" prefWidth="135.0" text="Surname" />
-                  <TableColumn fx:id="patientAge" prefWidth="75.0" text="Age(DOB)" />
+                <TableColumn fx:id="patientID" prefWidth="57.0" resizable="false" text="ID" />
+                <TableColumn fx:id="patientName" prefWidth="132.0" resizable="false" text="Name" />
+                  <TableColumn fx:id="patientSurname" prefWidth="135.0" resizable="false" text="Surname" />
+                  <TableColumn fx:id="patientAge" prefWidth="75.0" resizable="false" text="Age(DOB)" />
               </columns>
             </TableView>
             <TextArea fx:id="getPatientDiagnosis" layoutX="407.0" layoutY="23.0" prefHeight="568.0" prefWidth="533.0" promptText="Diagnosis" AnchorPane.leftAnchor="407.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="23.0" />
-            <Button fx:id="pateintReloadDB" layoutX="493.0" layoutY="604.0" mnemonicParsing="false" onAction="#PatientData" prefHeight="54.0" prefWidth="268.0" text="Reload" />
+            <Button fx:id="pateintReloadDB" layoutX="493.0" layoutY="604.0" mnemonicParsing="false" onAction="#ShowData" prefHeight="54.0" prefWidth="104.0" text="Reload" />
             <Separator layoutX="400.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="7.0" />
             <Button fx:id="regPatientBtn" layoutX="770.0" layoutY="604.0" mnemonicParsing="false" onAction="#setPatientsData" prefHeight="54.0" prefWidth="97.0" text="RegPatient" />
          </children>

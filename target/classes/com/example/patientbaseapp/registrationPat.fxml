@@ -13,15 +13,15 @@
       <AnchorPane prefHeight="400.0" prefWidth="740.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="patientAdd" layoutX="560.0" layoutY="277.0" mnemonicParsing="false" onAction="#initialize" prefHeight="61.0" prefWidth="97.0" text="Add" />
-            <VBox layoutX="83.0" layoutY="108.0" prefHeight="112.0" prefWidth="600.0" spacing="4.0" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="83.0">
+            <VBox layoutX="83.0" layoutY="56.0" prefHeight="195.0" prefWidth="574.0" spacing="4.0" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="83.0">
                <children>
-                  <TextField fx:id="nameText" prefHeight="25.0" prefWidth="388.0" promptText="Name" />
-                  <TextField fx:id="surnameText" prefHeight="25.0" prefWidth="79.0" promptText="Surname" />
-                  <TextField fx:id="dateOfBirth" prefHeight="81.0" prefWidth="312.0" promptText="Date of Birth" />
-                  <TextField fx:id="diagnosisText" layoutX="10.0" layoutY="68.0" prefHeight="81.0" prefWidth="312.0" promptText="Diagnosis" />
+                  <TextField fx:id="nameText" alignment="CENTER" prefHeight="25.0" prefWidth="388.0" promptText="Name" />
+                  <TextField fx:id="surnameText" alignment="CENTER" prefHeight="25.0" prefWidth="79.0" promptText="Surname" />
+                  <TextField fx:id="dateOfBirth" alignment="CENTER" prefHeight="23.0" prefWidth="574.0" promptText="Date of Birth" />
+                  <TextField fx:id="diagnosisText" alignment="CENTER" layoutX="10.0" layoutY="68.0" prefHeight="113.0" prefWidth="574.0" promptText="Diagnosis" />
                </children>
             </VBox>
-            <Text layoutX="304.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Form" textAlignment="CENTER" wrappingWidth="132.13671875">
+            <Text layoutX="304.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Form" textAlignment="CENTER" wrappingWidth="132.13671875">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

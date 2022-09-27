@@ -72,13 +72,16 @@ public class Login {
             if (!accID.equals("") && !accPass.equals("")) {
                 try {
                     loginAcc(accID, accPass);
+
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
 
                 }
-            } else {
+
+                } else {
                 infoBox("Enter Correct ID and/or Password", "Failed", null);
+
             }
         });
 
@@ -114,7 +117,7 @@ public class Login {
         ResultSet result = databaseHandler.getAccount(account);
         if (result.next()) {
     //        infoBox("Login Successfull", "Success", null);
-            newScene("after_login(orig).fxml");
+            newScene("after_login.fxml");
         } else {
 
         }

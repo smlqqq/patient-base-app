@@ -64,7 +64,6 @@ public class RegistrationPat extends Configs {
 
         try {
             PreparedStatement preparedStatement = getDbConnection().prepareStatement(setSelect);
-
             preparedStatement.setString(1, setFirstName);
             preparedStatement.setString(2, setLastName);
             preparedStatement.setString(3, setDayOfBirth);
@@ -81,9 +80,21 @@ public class RegistrationPat extends Configs {
 
         RegistrationPat registration = new RegistrationPat();
         patientAdd.setOnAction(ActionEvent -> {
-            registration.setPatient(nameText.getText(), surnameText.getText(), dateOfBirth.getText(), diagnosisText.getText());
-            infoBox("Registration Successfull", "Success", null);
+            if(nameText.getText().equals("")) {
+                infoBox("Registration not Successfull, \nPlease, enter Name", "Success", null);
+            } else if (surnameText.getText().equals("")) {
+                infoBox("Registration not Successfull,  \nPlease, enter Surname ", "Success", null);
+            } else if (dateOfBirth.getText().equals("")) {
+                infoBox("Registration not Successfull,   \nPlease, enter DOB", "Success", null);
+            } else if (diagnosisText.getText().equals("")) {
+                infoBox("Registration not Successfull,   \nPlease, enter Diagnosis", "Success", null);
+            }else {
 
+                registration.setPatient(nameText.getText(), surnameText.getText(), dateOfBirth.getText(), diagnosisText.getText());
+
+                infoBox("Registration Successfull", "Success", null);
+
+            }
         });
 
 
@@ -92,7 +103,7 @@ public class RegistrationPat extends Configs {
         Stage stage = (Stage) backBtn.getScene().getWindow();
         // do what you have to do
         stage.close();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("after_login(orig).fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("after_login.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();
         stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
