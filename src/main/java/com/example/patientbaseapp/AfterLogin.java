@@ -1,6 +1,7 @@
 package com.example.patientbaseapp;
 
 import com.example.patientbaseapp.DB.Configs;
+import com.example.patientbaseapp.DDD.DB;
 import com.example.patientbaseapp.Domain.Patients;
 
 
@@ -10,6 +11,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,13 +21,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import org.w3c.dom.events.MouseEvent;
 
 import java.io.IOException;
 import java.sql.*;
 
 public class AfterLogin  extends Configs {
     private ObservableList<ObservableList> data;
+
 
     @FXML
     private TableView patientsTable;
@@ -57,16 +59,52 @@ public class AfterLogin  extends Configs {
     @FXML
     private Button backBtn;
 
-    public void PatientData(ActionEvent e) throws Exception {
+
+//    ObservableList<Patients> oblist = FXCollections.observableArrayList();
+
+    public void PatientData(ActionEvent e)  {
+
+//          String selectPatients = "SELECT id, first_name, second_name, day_of_birth FROM hospital_db.patients";
+//          String selectPatients = "SELECT * FROM hospital_db.patients";
+//
+//            Connection connection = getDbConnection();
+//            ObservableList <Patients> patients = FXCollections.observableArrayList();
+//            //  data = FXCollections.observableArrayList();
+//            ResultSet rs = connection.createStatement().executeQuery(selectPatients);
+//
+//            while (rs.next()){
+//                oblist.add(new Patients(rs.getInt("id"), rs.getString("first_name"), rs.getString("second_name"), rs.getString("day_of_birth")));
+//            }
+//
+//        patientID.setCellValueFactory(new PropertyValueFactory<>("id"));
+//        patientName.setCellValueFactory(new PropertyValueFactory<>("firstName1"));
+//        patientSurname.setCellValueFactory(new PropertyValueFactory<>("lastName1"));
+//        patientAge.setCellValueFactory(new PropertyValueFactory<>("dayOfBirth1"));
+//
+//
+//
+//        getPatientTable.setItems(oblist);
+
+
+
+
+
+
 
 
         pateintReloadDB.setOnAction(actionEvent -> {
+
             try {
                 getPatient();
-//                onEdit();
-            } catch (SQLException | ClassNotFoundException ex) {
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
+            //            onEdit();
+
+
+//                onEdit();
         });
 
 //        if (getPatientTable.getSelectionModel().getSelectedItem() != null) {
@@ -112,61 +150,117 @@ public class AfterLogin  extends Configs {
 //        return dbConnection;
     }
 
+//
+//    public void getPatient() throws SQLException, ClassNotFoundException {
+////        String selectPatients = "SELECT id, first_name, second_name, day_of_birth FROM hospital_db.patients";
+//        String selectPatients = "SELECT * FROM hospital_db.patients";
+//        try {
+//            Connection connection = getDbConnection();
+//            ObservableList <Patients> patients = FXCollections.observableArrayList();
+//            //  data = FXCollections.observableArrayList();
+//            ResultSet rs = connection.createStatement().executeQuery(selectPatients);
+//
+//            while (rs.next()) {
+//                Integer ID = rs.getInt("id");
+//                String firstName = rs.getString("first_name");
+//                String secondName = rs.getString("second_name");
+//                String DOB = rs.getString("day_of_birth");
+//
+//                patients.add(new Patients(ID,firstName,secondName,DOB));
+//            }
+//
+//            TableColumn<Patients, Integer> id = new TableColumn<>("ID");
+//            id.setCellValueFactory(new PropertyValueFactory<Patients, Integer>("ID"));
+//
+//            TableColumn<Patients, String> firstName = new TableColumn<>("Name");
+//            firstName.setCellValueFactory(new PropertyValueFactory<Patients, String >("firstName"));
+//
+//            TableColumn<Patients, String> secondName = new TableColumn<>("Last Name");
+//            secondName.setCellValueFactory(new PropertyValueFactory<Patients, String>("lastName"));
+//
+//            TableColumn<Patients, String > dob = new TableColumn<>("Day Of Birth");
+//            dob.setCellValueFactory(new PropertyValueFactory<Patients, String>("dayOfBirth"));
+//
+//
+//            getPatientTable.getColumns().addAll(id,firstName,secondName,dob);
+//            getPatientTable.setItems(patients);
+//
+//
+//
+//
+//
+//        } catch (ClassNotFoundException e) {
+//            throw new RuntimeException(e);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
 
+
+        //        String selectPatients = "SELECT * FROM hospital_db.patients";
+//        try {
+//            Connection connection = getDbConnection();
+//            ObservableList <Patients> patients = FXCollections.observableArrayList();
+//            //  data = FXCollections.observableArrayList();
+//            ResultSet rs = connection.createStatement().executeQuery(selectPatients);
+
+
+//    }
+
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------
     public void getPatient() throws SQLException, ClassNotFoundException {
-        String selectPatients = "SELECT id, first_name, second_name, day_of_birth FROM hospital_db.patients";
+        String selectPatients = "SELECT id, first_name,second_name,day_of_birth FROM hospital_db.patients";
         try {
+            Connection connection = getDbConnection();
+            data = FXCollections.observableArrayList();
+            ResultSet rs = connection.createStatement().executeQuery(selectPatients);
 
+            for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
+                //We are using non property style for making dynamic table
+                final int j = i;
+                TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
+                col.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>) param -> new SimpleStringProperty(param.getValue().get(j).toString()));
 
-            Connection c = getDbConnection();
-            ObservableList<Patients> patients = FXCollections.observableArrayList();
-            //  data = FXCollections.observableArrayList();
-            ResultSet rs = c.createStatement().executeQuery(selectPatients);
-
-            while (rs.next()) {
-                Integer patID = rs.getInt("id");
-                String patName = rs.getString("first_name");
-                String patSurName = rs.getString("second_name");
-                String patDOB = rs.getString("day_of_birth");
-
-                patients.add(new Patients(patID, patName, patSurName, patDOB));
+                getPatientTable.getColumns().addAll(col);
+                System.out.println("Column [" + i + "] ");
             }
-            patientID.setCellValueFactory(new PropertyValueFactory<>("ID"));
-            patientName.setCellValueFactory(new PropertyValueFactory<>("Name"));
-            patientSurname.setCellValueFactory(new PropertyValueFactory<>("SurName"));
-            patientAge.setCellValueFactory(new PropertyValueFactory<>("Age(DOB)"));
+            while (rs.next()) {
+                //Iterate Row
+                ObservableList<String> row = FXCollections.observableArrayList();
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+                    //Iterate Column
+                    row.add(rs.getString(i));
+                }
+                System.out.println("Row [1] added " + row);
+                data.addAll(row);
+            }
 
-
-            getPatientTable.setItems(patients);
-
-
-
-
-
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            //FINALLY ADDED TO TableView
+            getPatientTable.setItems(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error on Building Data");
         }
     }
-
-    public void onEdit(){
-
-     if (getPatientTable.getSelectionModel().getSelectedItem() != null) {
-         Patients selectedPatient = (Patients) getPatientTable.getSelectionModel().getSelectedItem();
-         patientID.setText(String.valueOf(selectedPatient.getID()));
-         patientName.setText(selectedPatient.getFirstName());
-         patientSurname.setText(selectedPatient.getLastName());
-         patientAge.setText(selectedPatient.getDayOfBirth());
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-     }
-    }
+//    public void onEdit(){
+//
+//     if (getPatientTable.getSelectionModel().getSelectedItem() != null) {
+//         Patients selectedPatient = (Patients) getPatientTable.getSelectionModel().getSelectedItem();
+//         patientID.setText(String.valueOf(selectedPatient.getId()));
+//         patientName.setText(selectedPatient.getFirstName1());
+//         patientSurname.setText(selectedPatient.getLastName1());
+//         patientAge.setText(selectedPatient.getDayOfBirth1());
+//
+//
+//     }
+//    }
 
 
-
-
-//        Connection c = getDbConnection();
+//        Connection connection = getDbConnection();
 //        data = FXCollections.observableArrayList();
 //
 ////        ObservableList<String> row = FXCollections.observableArrayList();
@@ -189,9 +283,7 @@ public class AfterLogin  extends Configs {
 ////            ResultSet rsDiagnosis = c.createStatement().executeQuery(selectDiagnosis);
 //
 //
-//
-//
-//            ResultSet rs = c.createStatement().executeQuery(selectPatients);
+//            ResultSet rs = connection.createStatement().executeQuery(selectPatients);
 //            for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
 //                //We are using non property style for making dynamic table
 //                final int j = i;
@@ -207,20 +299,23 @@ public class AfterLogin  extends Configs {
 //                ObservableList<String> row = FXCollections.observableArrayList();
 //                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
 //                    //Iterate Column
-//
 //                    row.add(rs.getString(i));
 //
 //                }
 //                data.add(row);
 //            }
-//            getPatientTable.setItems(data);
+//            getPatientTable.getItems().clear();
+//
+//            getPatientTable.getItems().addAll(data);
+//
 //        } catch (SQLException e) {
 //            throw new RuntimeException(e);
 //        }
-//
 //    }
 
-}
+    }
+
+
 
 
 
