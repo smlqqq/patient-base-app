@@ -223,7 +223,9 @@ public class AfterLogin  extends Configs {
                 col.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>) param -> new SimpleStringProperty(param.getValue().get(j).toString()));
 
                 getPatientTable.getColumns().addAll(col);
-                System.out.println("Column [" + i + "] ");
+                getPatientTable.setColumnResizePolicy(getPatientTable.CONSTRAINED_RESIZE_POLICY);
+
+//                System.out.println("Column [" + i + "] ");
             }
             while (rs.next()) {
                 //Iterate Row
@@ -232,7 +234,7 @@ public class AfterLogin  extends Configs {
                     //Iterate Column
                     row.add(rs.getString(i));
                 }
-                System.out.println("Row [1] added " + row);
+//                System.out.println("Row [1] added " + row);
                 data.addAll(row);
             }
 
