@@ -13,7 +13,7 @@
          <children>
             <TableView fx:id="getPatientTable" prefHeight="700.0" prefWidth="403.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="550.0" AnchorPane.topAnchor="0.0" />
             <TextArea fx:id="getPatientDiagnosis" layoutX="407.0" layoutY="23.0" prefHeight="568.0" prefWidth="533.0" promptText="Diagnosis" AnchorPane.leftAnchor="407.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="23.0" />
-            <Button layoutX="493.0" layoutY="604.0" mnemonicParsing="false" onAction="#getPatient" prefHeight="54.0" prefWidth="268.0" text="Reload" />
+            <Button layoutX="493.0" layoutY="604.0" mnemonicParsing="false" onAction="#getPatient" prefHeight="54.0" prefWidth="114.0" text="Reload" />
             <Separator layoutX="400.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="7.0" />
             <Button fx:id="regPatientBtn" layoutX="770.0" layoutY="604.0" mnemonicParsing="false" onAction="#setPatientsData" prefHeight="54.0" prefWidth="97.0" text="RegPatient" />
          </children>
