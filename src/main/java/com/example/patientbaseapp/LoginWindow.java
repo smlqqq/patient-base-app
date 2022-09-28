@@ -2,7 +2,7 @@ package com.example.patientbaseapp;
 import com.example.patientbaseapp.DB.Handler;
 
 import com.example.patientbaseapp.Domain.Account;
-import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,20 +10,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-public class Login {
+public class LoginWindow {
 
-    public Login() {
+    public LoginWindow() {
 
     }
-
-
-
-
-
 
     @FXML
     private Button signUp_button;
@@ -55,13 +48,6 @@ public class Login {
     @FXML
     private Button back_btn;
 
-
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    ResultSet resultSet = null;
-
-    Stage dialogStage = new Stage();
-    Scene scene;
 
 
     @FXML
@@ -134,6 +120,7 @@ public class Login {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.showAndWait();
+            stage.setResizable(false);
     }
 
     public static void infoBox(String infoMessage, String titleBar, String headerMessage)

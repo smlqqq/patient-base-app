@@ -95,6 +95,7 @@ public class RegistrationDoc extends Configs {
         stage.setTitle("Login");
         stage.setScene(new Scene(root1));
         stage.show();
+        stage.setResizable(false);
     }
 
 

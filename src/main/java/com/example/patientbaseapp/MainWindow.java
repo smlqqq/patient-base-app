@@ -1,31 +1,25 @@
 package com.example.patientbaseapp;
-
 import com.example.patientbaseapp.DB.Configs;
-import com.example.patientbaseapp.DDD.DB;
 import com.example.patientbaseapp.Domain.Patients;
 
-
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.sql.*;
 
-public class AfterLogin  extends Configs {
+public class MainWindow extends Configs {
     private ObservableList<ObservableList> data;
 
 
@@ -132,6 +126,7 @@ public class AfterLogin  extends Configs {
         stage.setTitle("Registration Form");
         stage.setScene(new Scene(root1));
         stage.show();
+        stage.setResizable(false);
 
     }
 
@@ -150,101 +145,102 @@ public class AfterLogin  extends Configs {
 //        return dbConnection;
     }
 
-//
-//    public void getPatient() throws SQLException, ClassNotFoundException {
-////        String selectPatients = "SELECT id, first_name, second_name, day_of_birth FROM hospital_db.patients";
+
+    public void getPatient() throws SQLException, ClassNotFoundException {
+        String selectPatients = "SELECT id, first_name, second_name, day_of_birth FROM hospital_db.patients";
+//        String selectPatients = "SELECT * FROM hospital_db.patients";
+        try {
+            Connection connection = getDbConnection();
+           final ObservableList<Patients> patients = FXCollections.observableArrayList();
+            //  data = FXCollections.observableArrayList();
+            ResultSet rs = connection.createStatement().executeQuery(selectPatients);
+
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String first_name = rs.getString("first_name");
+                String second_name = rs.getString("second_name");
+                String day_of_birth = rs.getString("day_of_birth");
+
+                patients.add(new Patients(id, first_name, second_name, day_of_birth));
+            }
+
+            TableColumn<Patients, String> id = new TableColumn<>("ID");
+            id.setCellValueFactory(cellData -> cellData.getValue().IDProperty());
+
+            TableColumn<Patients, String> name = new TableColumn<>("Name");
+            name.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
+
+            TableColumn<Patients, String> surname = new TableColumn<>("Last Name");
+            surname.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
+
+
+            TableColumn<Patients, String> age = new TableColumn<>("Day Of Birth");
+            age.setCellValueFactory(cellData -> cellData.getValue().dayOfBirthProperty());
+
+
+            getPatientTable.getColumns().addAll(id, name, surname, age);
+            getPatientTable.setColumnResizePolicy(getPatientTable.CONSTRAINED_RESIZE_POLICY);
+            getPatientTable.setItems(patients);
+//            getPatientTable.getItems().clear();
+
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
 //        String selectPatients = "SELECT * FROM hospital_db.patients";
 //        try {
 //            Connection connection = getDbConnection();
-//            ObservableList <Patients> patients = FXCollections.observableArrayList();
+//            ObservableList<Patients> patients = FXCollections.observableArrayList();
 //            //  data = FXCollections.observableArrayList();
 //            ResultSet rs = connection.createStatement().executeQuery(selectPatients);
 //
-//            while (rs.next()) {
-//                Integer ID = rs.getInt("id");
-//                String firstName = rs.getString("first_name");
-//                String secondName = rs.getString("second_name");
-//                String DOB = rs.getString("day_of_birth");
 //
-//                patients.add(new Patients(ID,firstName,secondName,DOB));
-//            }
-//
-//            TableColumn<Patients, Integer> id = new TableColumn<>("ID");
-//            id.setCellValueFactory(new PropertyValueFactory<Patients, Integer>("ID"));
-//
-//            TableColumn<Patients, String> firstName = new TableColumn<>("Name");
-//            firstName.setCellValueFactory(new PropertyValueFactory<Patients, String >("firstName"));
-//
-//            TableColumn<Patients, String> secondName = new TableColumn<>("Last Name");
-//            secondName.setCellValueFactory(new PropertyValueFactory<Patients, String>("lastName"));
-//
-//            TableColumn<Patients, String > dob = new TableColumn<>("Day Of Birth");
-//            dob.setCellValueFactory(new PropertyValueFactory<Patients, String>("dayOfBirth"));
-//
-//
-//            getPatientTable.getColumns().addAll(id,firstName,secondName,dob);
-//            getPatientTable.setItems(patients);
-//
-//
-//
-//
-//
-//        } catch (ClassNotFoundException e) {
-//            throw new RuntimeException(e);
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
 //        }
-
-
-        //        String selectPatients = "SELECT * FROM hospital_db.patients";
-//        try {
-//            Connection connection = getDbConnection();
-//            ObservableList <Patients> patients = FXCollections.observableArrayList();
-//            //  data = FXCollections.observableArrayList();
-//            ResultSet rs = connection.createStatement().executeQuery(selectPatients);
-
-
-//    }
+    }
 
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------
-    public void getPatient() throws SQLException, ClassNotFoundException {
-        String selectPatients = "SELECT id, first_name,second_name,day_of_birth FROM hospital_db.patients";
-        try {
-            Connection connection = getDbConnection();
-            data = FXCollections.observableArrayList();
-            ResultSet rs = connection.createStatement().executeQuery(selectPatients);
-
-            for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
-                //We are using non property style for making dynamic table
-                final int j = i;
-                TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
-                col.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>) param -> new SimpleStringProperty(param.getValue().get(j).toString()));
-
-                getPatientTable.getColumns().addAll(col);
-                getPatientTable.setColumnResizePolicy(getPatientTable.CONSTRAINED_RESIZE_POLICY);
-
-//                System.out.println("Column [" + i + "] ");
-            }
-            while (rs.next()) {
-                //Iterate Row
-                ObservableList<String> row = FXCollections.observableArrayList();
-                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-                    //Iterate Column
-                    row.add(rs.getString(i));
-                }
-//                System.out.println("Row [1] added " + row);
-                data.addAll(row);
-            }
-
-            //FINALLY ADDED TO TableView
-            getPatientTable.setItems(data);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error on Building Data");
-        }
-    }
+//    public void getPatient() throws SQLException, ClassNotFoundException {
+//        String selectPatients = "SELECT id, first_name,second_name,day_of_birth FROM hospital_db.patients";
+//        try {
+//            Connection connection = getDbConnection();
+//            data = FXCollections.observableArrayList();
+//            ResultSet rs = connection.createStatement().executeQuery(selectPatients);
+//
+//            for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
+//                //We are using non property style for making dynamic table
+//                final int j = i;
+//                TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
+//                col.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>) param -> new SimpleStringProperty(param.getValue().get(j).toString()));
+//
+//                getPatientTable.getColumns().addAll(col);
+//                getPatientTable.setColumnResizePolicy(getPatientTable.CONSTRAINED_RESIZE_POLICY);
+//
+////                System.out.println("Column [" + i + "] ");
+//            }
+//            while (rs.next()) {
+//                //Iterate Row
+//                ObservableList<String> row = FXCollections.observableArrayList();
+//                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+//                    //Iterate Column
+//                    row.add(rs.getString(i));
+//                }
+////                System.out.println("Row [1] added " + row);
+//                data.addAll(row);
+//            }
+//
+//            //FINALLY ADDED TO TableView
+//            getPatientTable.setItems(data);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            System.out.println("Error on Building Data");
+//        }
+//    }
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
