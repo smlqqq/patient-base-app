@@ -17,6 +17,7 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.regex.Pattern;
 
 public class RegistrationPat extends Configs {
 
@@ -77,23 +78,19 @@ public class RegistrationPat extends Configs {
 
     @FXML
     public void initialize(){
-
         RegistrationPat registration = new RegistrationPat();
         patientAdd.setOnAction(ActionEvent -> {
-            if(nameText.getText().equals("")) {
-                infoBox("Registration not Successfull, \nPlease, enter Name", "Success", null);
-            } else if (surnameText.getText().equals("")) {
-                infoBox("Registration not Successfull,  \nPlease, enter Surname ", "Success", null);
-            } else if (dateOfBirth.getText().equals("")) {
-                infoBox("Registration not Successfull,   \nPlease, enter DOB", "Success", null);
+            if(nameText.getText().matches("\\d+")||nameText.getText().equals("")) {
+                infoBox("Registration not Successfull, \nPlease, enter the Name. \nUse characters only.", "Warning", null);
+            } else if (surnameText.getText().matches("\\d+") ||surnameText.getText().equals("")) {
+                infoBox("Registration not Successfull,  \nPlease, enter the Surname \nUse characters only.", "Warning", null);
+            } else if (dateOfBirth.getText().matches("[a-zA-Z]+") || dateOfBirth.getText().equals("")) {
+                infoBox("Registration not Successfull,   \nPlease, enter right DOB \nMust contains only numbers \nFormat (dd/mm/yyyy) or (dd.mm.yyyy)", "Warning", null);
             } else if (diagnosisText.getText().equals("")) {
                 infoBox("Registration not Successfull,   \nPlease, enter Diagnosis", "Success", null);
             }else {
-
                 registration.setPatient(nameText.getText(), surnameText.getText(), dateOfBirth.getText(), diagnosisText.getText());
-
                 infoBox("Registration Successfull", "Success", null);
-
             }
         });
 
@@ -110,6 +107,7 @@ public class RegistrationPat extends Configs {
         stage.setTitle("DB");
         stage.setScene(new Scene(root1));
         stage.show();
+        stage.setResizable(false);
     }
 
     public static void infoBox(String infoMessage, String titleBar, String headerMessage)
