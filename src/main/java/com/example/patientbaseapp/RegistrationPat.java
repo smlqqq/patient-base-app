@@ -100,7 +100,7 @@ public class RegistrationPat extends Configs {
         Stage stage = (Stage) backBtn.getScene().getWindow();
         // do what you have to do
         stage.close();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("after_login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("after_login3.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();
         stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);

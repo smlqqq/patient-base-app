@@ -86,6 +86,8 @@ public class MainWindow extends Configs {
 
 
 
+
+
         pateintReloadDB.setOnAction(actionEvent -> {
 
             try {
@@ -147,11 +149,67 @@ public class MainWindow extends Configs {
 
 
     public void getPatient() throws SQLException, ClassNotFoundException {
+//        String selectPatients = "SELECT id, first_name, second_name, day_of_birth FROM hospital_db.patients";
+////        String selectPatients = "SELECT * FROM hospital_db.patients";
+//        try {
+//            Connection connection = getDbConnection();
+//           final ObservableList<Patients> patients = FXCollections.observableArrayList();
+//            //  data = FXCollections.observableArrayList();
+//            ResultSet rs = connection.createStatement().executeQuery(selectPatients);
+//
+//            while (rs.next()) {
+//                String id = rs.getString("id");
+//                String first_name = rs.getString("first_name");
+//                String second_name = rs.getString("second_name");
+//                String day_of_birth = rs.getString("day_of_birth");
+//
+//                patients.add(new Patients(id, first_name, second_name, day_of_birth));
+//            }
+//
+//            TableColumn<Patients, String> id = new TableColumn<>("ID");
+//            id.setCellValueFactory(cellData -> cellData.getValue().IDProperty());
+//
+//            TableColumn<Patients, String> name = new TableColumn<>("Name");
+//            name.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
+//
+//            TableColumn<Patients, String> surname = new TableColumn<>("Last Name");
+//            surname.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
+//
+//
+//            TableColumn<Patients, String> age = new TableColumn<>("Day Of Birth");
+//            age.setCellValueFactory(cellData -> cellData.getValue().dayOfBirthProperty());
+//
+//
+//            getPatientTable.getColumns().addAll(id, name, surname, age);
+//            getPatientTable.setColumnResizePolicy(getPatientTable.CONSTRAINED_RESIZE_POLICY);
+//            getPatientTable.setItems(patients);
+////            getPatientTable.getItems().clear();
+//
+//
+//        } catch (ClassNotFoundException e) {
+//            throw new RuntimeException(e);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+
+
+//        String selectPatients = "SELECT * FROM hospital_db.patients";
+//        try {
+//            Connection connection = getDbConnection();
+//            ObservableList<Patients> patients = FXCollections.observableArrayList();
+//            //  data = FXCollections.observableArrayList();
+//            ResultSet rs = connection.createStatement().executeQuery(selectPatients);
+//
+//
+//        }
+    }
+
+    public void getDataFromDB(ActionEvent actionEvent) {
         String selectPatients = "SELECT id, first_name, second_name, day_of_birth FROM hospital_db.patients";
 //        String selectPatients = "SELECT * FROM hospital_db.patients";
         try {
             Connection connection = getDbConnection();
-           final ObservableList<Patients> patients = FXCollections.observableArrayList();
+            final ObservableList<Patients> patients = FXCollections.observableArrayList();
             //  data = FXCollections.observableArrayList();
             ResultSet rs = connection.createStatement().executeQuery(selectPatients);
 
@@ -181,7 +239,7 @@ public class MainWindow extends Configs {
             getPatientTable.getColumns().addAll(id, name, surname, age);
             getPatientTable.setColumnResizePolicy(getPatientTable.CONSTRAINED_RESIZE_POLICY);
             getPatientTable.setItems(patients);
-//            getPatientTable.getItems().clear();
+
 
 
         } catch (ClassNotFoundException e) {
@@ -189,19 +247,98 @@ public class MainWindow extends Configs {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
-//        String selectPatients = "SELECT * FROM hospital_db.patients";
-//        try {
-//            Connection connection = getDbConnection();
-//            ObservableList<Patients> patients = FXCollections.observableArrayList();
-//            //  data = FXCollections.observableArrayList();
-//            ResultSet rs = connection.createStatement().executeQuery(selectPatients);
-//
-//
-//        }
     }
 
+
+    public void Reload(ActionEvent actionEvent) {
+        getPatientTable.getItems().clear();
+        getPatientTable.getColumns().clear();
+        getDataFromDB(actionEvent);
+
+    }
+    public void Search(ActionEvent actionEvent) {
+    }
+
+    public void Update(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private TextField nameText1;
+    @FXML
+    private TextField surnameText1;
+    public void Delete(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        Connection connection = getDbConnection();
+        String selectPatients = "DELETE from hospital_db.patients where id =?  ";
+        PreparedStatement pst;
+        try {
+//            getPatientTable.getItems().removeAll(getPatientTable.getSelectionModel().getSelectedItem());
+
+            pst = connection.prepareStatement(selectPatients);
+//            pst.setString(1, nameText1.getText());
+            pst.setString(1, nameText1.getText());
+            pst.execute();
+            getDataFromDB(actionEvent);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    //PATIENTS ADD
+//----------------------------------------------------------------------------------------------------------------------
+    @FXML
+    private TextField nameText;
+    @FXML
+    private TextField surnameText;
+    @FXML
+    private TextField dateOfBirth;
+    @FXML
+    private TextField diagnosisText;
+    @FXML
+    private Button patientAdd;
+    public void addPatients (String setFirstName, String setLastName, String setDayOfBirth, String setDiagnosis) {
+        String setSelect = "insert into hospital_db.patients (first_name,second_name,day_of_birth,diagnosis)VALUES (?,?,?,?)";
+
+        try {
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(setSelect);
+            preparedStatement.setString(1, setFirstName);
+            preparedStatement.setString(2, setLastName);
+            preparedStatement.setString(3, setDayOfBirth);
+            preparedStatement.setString(4, setDiagnosis);
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+
+        }
+    }
+//------------------------------------------------------------------------------------------------------------------------------------
+
+    public void addPatient(ActionEvent actionEvent) {
+        MainWindow mainWindow = new MainWindow();
+        patientAdd.setOnAction(ActionEvent -> {
+            if(nameText.getText().matches("\\d+")||nameText.getText().equals("")) {
+                infoBox("Registration not Successfull, \nPlease, enter the Name. \nUse characters only.", "Warning", null);
+            } else if (surnameText.getText().matches("\\d+") ||surnameText.getText().equals("")) {
+                infoBox("Registration not Successfull,  \nPlease, enter the Surname \nUse characters only.", "Warning", null);
+            } else if (dateOfBirth.getText().matches("[a-zA-Z]+") || dateOfBirth.getText().equals("")) {
+                infoBox("Registration not Successfull,   \nPlease, enter right DOB \nMust contains only numbers \nFormat (dd/mm/yyyy) or (dd.mm.yyyy)", "Warning", null);
+            } else if (diagnosisText.getText().equals("")) {
+                infoBox("Registration not Successfull,   \nPlease, enter Diagnosis", "Success", null);
+            }else {
+                mainWindow.addPatients(nameText.getText(), surnameText.getText(), dateOfBirth.getText(), diagnosisText.getText());
+                infoBox("Registration Successfull", "Success", null);
+            }
+        });
+
+    }
+    public static void infoBox(String infoMessage, String titleBar, String headerMessage)
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titleBar);
+        alert.setHeaderText(headerMessage);
+        alert.setContentText(infoMessage);
+        alert.showAndWait();
+    }
+//----------------------------------------------------------------------------------------------------------------------
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------
