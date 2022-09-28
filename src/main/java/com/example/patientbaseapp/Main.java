@@ -13,12 +13,14 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         stg = primaryStage;
         primaryStage.setResizable(false);
-        Parent root = FXMLLoader.load(getClass().getResource("login-gui.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("login-gui.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("after_login3.fxml"));
         primaryStage.setTitle(" ");
         primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(root, 740, 400));
+//        primaryStage.setScene(new Scene(root, 740, 400));
+        primaryStage.setScene(new Scene(root, 1100, 800));
         primaryStage.show();
-        primaryStage.setResizable(false);
+//        primaryStage.setResizable(false);
     }
 
 
