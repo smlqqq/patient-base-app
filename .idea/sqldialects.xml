@@ -4,6 +4,5 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/patientbaseapp/DB/Handler.java" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/patientbaseapp/MainWindow.java" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/patientbaseapp/RegistrationDoc.java" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/example/patientbaseapp/RegistrationPat.java" dialect="PostgreSQL" />
   </component>
 </project>

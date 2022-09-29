@@ -1,6 +1,5 @@
 package com.example.patientbaseapp;
-
-import com.example.patientbaseapp.DB.Configs;
+import com.example.patientbaseapp.DB.Handler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,14 +11,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class RegistrationDoc extends Configs {
+public class RegistrationDoc extends Handler {
     @FXML
     private TextField login_doc_reg;
 
@@ -38,23 +34,9 @@ public class RegistrationDoc extends Configs {
     @FXML
     private Button back_btn;
 
-    Connection dbConnection;
-
-    public Connection getDbConnection() throws ClassNotFoundException , SQLException {
-
-        String connectionString = "jdbc:postgresql://" + dbHost + ":"
-                + dbPort + "/" + dbName;
-
-
-        Class.forName("org.postgresql.Driver");
-        dbConnection = DriverManager.getConnection(connectionString,dbUser,dbPass);
-        return dbConnection;
-    }
-
     public void setAccount (String setLogin, String setPass, String setName, String setSurName) {
 
         String setSelect = "INSERT INTO hospital_db.docs (login,password,first_name,second_name)VALUES (?,?,?,?)";
-
 
         try {
             PreparedStatement preparedStatement = getDbConnection().prepareStatement(setSelect);
@@ -63,9 +45,7 @@ public class RegistrationDoc extends Configs {
             preparedStatement.setString(3, setName);
             preparedStatement.setString(4, setSurName);
             preparedStatement.executeUpdate();
-        } catch (SQLException | ClassNotFoundException e) {
-
-        }
+        } catch (SQLException | ClassNotFoundException e) {   }
 
     }
 
@@ -79,9 +59,6 @@ public class RegistrationDoc extends Configs {
 
         });
 
-//        back_btn.setOnAction(event -> {
-//            newScene("login-gui.fxml");
-//        });
     }
 
     public void backStage(ActionEvent e) throws IOException {
@@ -96,10 +73,8 @@ public class RegistrationDoc extends Configs {
         stage.setScene(new Scene(root1));
         stage.show();
         stage.setResizable(false);
+
     }
-
-
-
 
     public static void infoBox(String infoMessage, String titleBar, String headerMessage)
     {
@@ -109,22 +84,5 @@ public class RegistrationDoc extends Configs {
         alert.setContentText(infoMessage);
         alert.showAndWait();
     }
-
-    public void newScene(String window) {
-        signUp_button.getScene().getWindow().hide();
-        back_btn.getScene().getWindow().hide();
-
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource(window));
-        try {
-            fxmlLoader.load();
-        } catch (IOException e) {  }
-
-        Parent root = fxmlLoader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.showAndWait();
-    }
-
 
 }
