@@ -1,21 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="953.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.patientbaseapp.MainWindow">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.patientbaseapp.MainWindow">
    <center>
-      <AnchorPane prefHeight="700.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="760.0" prefWidth="1046.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="getPatientTable" prefHeight="700.0" prefWidth="403.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="550.0" AnchorPane.topAnchor="0.0" />
-            <TextArea fx:id="getPatientDiagnosis" layoutX="407.0" layoutY="23.0" prefHeight="568.0" prefWidth="533.0" promptText="Diagnosis" AnchorPane.leftAnchor="407.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="23.0" />
-            <Button layoutX="493.0" layoutY="604.0" mnemonicParsing="false" onAction="#getPatient" prefHeight="54.0" prefWidth="114.0" text="Reload" />
-            <Separator layoutX="400.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="7.0" />
-            <Button fx:id="regPatientBtn" layoutX="770.0" layoutY="604.0" mnemonicParsing="false" onAction="#setPatientsData" prefHeight="54.0" prefWidth="97.0" text="RegPatient" />
+            <TableView fx:id="getPatientTable" layoutX="6.0" layoutY="68.0" onMouseClicked="#getSelected" prefHeight="727.0" prefWidth="464.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="630.0" AnchorPane.topAnchor="68.0" />
+            <Button fx:id="patientDBReaload" layoutX="373.0" layoutY="32.0" mnemonicParsing="false" onAction="#Reload" prefHeight="28.0" prefWidth="101.0" style="-fx-background-color: FF5733;" text="Get List" textFill="WHITE" AnchorPane.bottomAnchor="740.0" AnchorPane.leftAnchor="373.0" AnchorPane.rightAnchor="630.0" AnchorPane.topAnchor="32.0" />
+            <VBox layoutX="499.0" layoutY="375.0" prefHeight="343.0" prefWidth="595.0" spacing="4.0" AnchorPane.bottomAnchor="87.0" AnchorPane.leftAnchor="499.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="375.0">
+               <children>
+                  <TextField fx:id="nameText" prefHeight="25.0" prefWidth="388.0" promptText="Name">
+                     <font>
+                        <Font size="15.0" />
+                     </font></TextField>
+                  <TextField fx:id="surnameText" alignment="BOTTOM_LEFT" prefHeight="25.0" prefWidth="79.0" promptText="Surname">
+                     <font>
+                        <Font size="15.0" />
+                     </font></TextField>
+                  <TextField fx:id="dateOfBirth" alignment="BOTTOM_LEFT" prefHeight="23.0" prefWidth="574.0" promptText="Date of Birth">
+                     <font>
+                        <Font size="15.0" />
+                     </font></TextField>
+                  <TextField fx:id="diagnosisText" alignment="TOP_LEFT" layoutX="10.0" layoutY="68.0" prefHeight="248.0" prefWidth="595.0" promptText="Diagnosis">
+                     <font>
+                        <Font size="20.0" />
+                     </font></TextField>
+               </children>
+            </VBox>
+            <Button fx:id="patientAdd" layoutX="698.0" layoutY="726.0" mnemonicParsing="false" onAction="#addPatient" prefHeight="40.0" prefWidth="114.0" text="Add" AnchorPane.bottomAnchor="34.0" AnchorPane.rightAnchor="256.0" AnchorPane.topAnchor="726.0" />
+            <Button fx:id="patientUpdate" layoutX="723.0" layoutY="239.0" mnemonicParsing="false" onAction="#Update" prefHeight="30.0" prefWidth="100.0" text="Update" AnchorPane.bottomAnchor="531.0" AnchorPane.rightAnchor="281.0" AnchorPane.topAnchor="239.0" />
+            <Button fx:id="patientDelete" layoutX="567.0" layoutY="238.0" mnemonicParsing="false" onAction="#Delete" prefHeight="30.0" prefWidth="100.0" text="Delete" AnchorPane.bottomAnchor="532.0" AnchorPane.leftAnchor="567.0" AnchorPane.rightAnchor="437.0" AnchorPane.topAnchor="238.0" />
+            <TextField fx:id="diagnosisText1" alignment="TOP_LEFT" layoutX="501.0" layoutY="95.0" prefHeight="125.0" prefWidth="593.0" promptText="Diagnosis" AnchorPane.bottomAnchor="580.0" AnchorPane.leftAnchor="501.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="95.0">
+               <font>
+                  <Font size="15.0" />
+               </font></TextField>
+            <Separator layoutX="485.0" orientation="VERTICAL" prefHeight="810.0" prefWidth="7.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="485.0" AnchorPane.rightAnchor="613.0" AnchorPane.topAnchor="0.0" />
+            <TextField fx:id="surnameText1" layoutX="759.0" layoutY="41.0" prefHeight="40.0" prefWidth="150.0" promptText="Surname" AnchorPane.bottomAnchor="724.0" AnchorPane.leftAnchor="759.0" AnchorPane.rightAnchor="195.0" AnchorPane.topAnchor="41.0">
+               <font>
+                  <Font size="15.0" />
+               </font></TextField>
+            <TextField fx:id="nameText1" layoutX="574.0" layoutY="41.0" prefHeight="40.0" prefWidth="145.0" promptText="Name" AnchorPane.bottomAnchor="724.0" AnchorPane.leftAnchor="574.0" AnchorPane.rightAnchor="386.0" AnchorPane.topAnchor="41.0">
+               <font>
+                  <Font size="15.0" />
+               </font></TextField>
+            <TextField fx:id="dobText" layoutX="944.0" layoutY="41.0" prefHeight="40.0" prefWidth="150.0" promptText="DOB" AnchorPane.bottomAnchor="724.0" AnchorPane.leftAnchor="944.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="41.0">
+               <font>
+                  <Font size="15.0" />
+               </font></TextField>
+            <Text layoutX="660.0" layoutY="352.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration form" textAlignment="CENTER" wrappingWidth="225.13671875" AnchorPane.rightAnchor="218.86328125">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Text>
+            <MenuBar layoutX="2.0" prefHeight="25.0" prefWidth="1100.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <TextField fx:id="idText" layoutX="501.0" layoutY="41.0" prefHeight="40.0" prefWidth="36.0" promptText="ID" AnchorPane.bottomAnchor="724.0" AnchorPane.leftAnchor="501.0" AnchorPane.rightAnchor="567.0" AnchorPane.topAnchor="41.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+            <Separator layoutX="486.0" layoutY="311.0" prefHeight="10.0" prefWidth="616.0" AnchorPane.rightAnchor="2.0" />
+            <TextField fx:id="searchField" layoutX="10.0" layoutY="31.0" onAction="#Search" prefHeight="31.0" prefWidth="349.0" promptText="Search">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
          </children>
       </AnchorPane>
    </center>

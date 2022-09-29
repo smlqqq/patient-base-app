@@ -1,8 +1,6 @@
 package com.example.patientbaseapp;
 import com.example.patientbaseapp.DB.Handler;
-
 import com.example.patientbaseapp.Domain.Account;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,26 +10,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+
 public class LoginWindow {
 
-    public LoginWindow() {
-
-    }
-
-    @FXML
-    private Button signUp_button;
-
-    @FXML
-    private TextField login_doc_reg;
-
-    @FXML
-    private PasswordField password_doc_reg;
-
-    @FXML
-    private TextField name_doc_reg;
-
-    @FXML
-    private TextField surname_doc_reg;
+    public LoginWindow() {  }
 
     @FXML
     private Button login_button;
@@ -44,10 +27,6 @@ public class LoginWindow {
 
     @FXML
     private Button Reg_btn;
-
-    @FXML
-    private Button back_btn;
-
 
 
     @FXML
@@ -71,29 +50,11 @@ public class LoginWindow {
             }
         });
 
-
-//
         Reg_btn.setOnAction(event -> {
             newScene("registrationDoc.fxml");
-
         });
 
-
-
-
-//            Registration registration = new Registration();
-//            signUp_button.setOnAction(MouseEvent -> {
-//                handler.setAccount(login_doc_reg.getText(), password_doc_reg.getText(), name_doc_reg.getText(), surname_doc_reg.getText());
-//
-//            });
-
     }
-
-
-
-
-
-
 
     private void loginAcc(String login, String pass) throws SQLException {
         Handler databaseHandler = new Handler();
@@ -102,10 +63,10 @@ public class LoginWindow {
         account.setPassword(pass);
         ResultSet result = databaseHandler.getAccount(account);
         if (result.next()) {
-    //        infoBox("Login Successfull", "Success", null);
-            newScene("after_login3.fxml");
+            infoBox("Login Successfull", "Success", null);
+            newScene("after_login.fxml");
         } else {
-
+            infoBox("Wrong login/password", "Warning", null);
         }
     }
     public void newScene(String window) {
@@ -132,18 +93,4 @@ public class LoginWindow {
         alert.showAndWait();
     }
 
-
-//    public void addUser() {
-//        String query = "INSERT into persons (Firstname, Lastname, DOB) VALUES (?, ?, ?)";
-//        try (conn = DBConnection.DbConnector();
-//        pst = conn.prepareStatement(query)) {
-//            pst.setString(1, txtFirstName.getText());
-//            pst.setString(2, txtLastName.getText());
-//            pst.setDate(3, java.sql.Date.valueOf(txtDOB.getValue()));
-//            pst.executeUpdate();
-//        }
-//    catch (SQLException xSql) {
-//            xSql.printStackTrace();
-//        }
-//    }
 }

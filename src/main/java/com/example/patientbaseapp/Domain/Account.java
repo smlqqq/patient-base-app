@@ -1,19 +1,16 @@
 package com.example.patientbaseapp.Domain;
 
 public class Account {
+
+
     private String Login;
     private String Password;
-
     private String Name;
-    private String SurName;
-
 
 
 
     public Account(){
-
     }
-
     public String getLogin() {
         return Login;
     }
@@ -38,18 +35,4 @@ public class Account {
         Name = name;
     }
 
-    public String getSurName() {
-        return SurName;
-    }
-
-    public void setSurName(String surName) {
-        SurName = surName;
-    }
-
-    public Account(String login, String password, String name, String surName) {
-        Login = login;
-        Password = password;
-        Name = name;
-        SurName = surName;
-    }
 }
