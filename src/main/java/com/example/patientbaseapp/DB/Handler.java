@@ -1,5 +1,6 @@
 package com.example.patientbaseapp.DB;
 import com.example.patientbaseapp.Domain.Account;
+import com.example.patientbaseapp.Domain.Patients;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,6 +23,8 @@ public class Handler   extends  Configs{
        dbConnection = DriverManager.getConnection(connectionString,dbUser,dbPass);
        return dbConnection;
    }
+
+
 
 
        public ResultSet getAccount(Account account){

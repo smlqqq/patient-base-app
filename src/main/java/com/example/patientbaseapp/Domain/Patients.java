@@ -7,6 +7,9 @@ public class Patients {
     private int id;
     private SimpleStringProperty ID;
     private SimpleStringProperty  firstName;
+    private SimpleStringProperty  lastName;
+    private SimpleStringProperty  dayOfBirth;
+    private SimpleStringProperty  diagnosis;
 
     public void setId(int id) {
         this.id = id;
@@ -15,10 +18,6 @@ public class Patients {
     public int getId() {
         return id;
     }
-
-    private SimpleStringProperty  lastName;
-    private SimpleStringProperty  dayOfBirth;
-    private SimpleStringProperty  diagnosis;
 
     public String getID() {
         return ID.get();
