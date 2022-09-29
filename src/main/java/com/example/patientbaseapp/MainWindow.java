@@ -212,6 +212,7 @@ public class MainWindow extends Configs {
             getPatientTable.setColumnResizePolicy(getPatientTable.CONSTRAINED_RESIZE_POLICY);
             getPatientTable.setItems(patients);
 
+            dbConnection.close();
 
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -238,9 +239,9 @@ public class MainWindow extends Configs {
             String data1 = patientID.getText();
             String data2 = patientName.getText();
             String data3 = patientSurname.getText();
-//            String data4 = patientDiagnosis.getText();
+            String data4 = patientDiagnosis.getText();
 
-            String setSelect = "UPDATE hospital_db.patients set first_name = " + data2 + ",second_name= " + data3;// + ",diagnosis= " + data4;
+            String setSelect = "UPDATE hospital_db.patients set first_name = " + data2 + ",second_name= " + data3+ ",diagnosis= " + data4;
             pst = dbConnection.prepareStatement(setSelect);
             pst.execute();
 
@@ -258,10 +259,14 @@ public class MainWindow extends Configs {
 //            getPatientTable.getItems().removeAll(getPatientTable.getSelectionModel().getSelectedItem());
 
             pst = dbConnection.prepareStatement(selectPatients);
-//            pst.setString(1, nameText1.getText());
-
-            pst.setString(1, nameText1.getText());
+            pst.setInt(1, Integer.parseInt(idText.getText()));
             pst.execute();
+            infoBox("Row deleted", "Succes", null);
+            Reload(actionEvent);
+
+
+
+//            pst.execute();
 //            getDataFromDB(actionEvent);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -314,7 +319,7 @@ public class MainWindow extends Configs {
         if (index <= -1) {
             return;
         }
-//        idText.setText(patientID.getCellData(index));
+        idText.setText(patientID.getCellData(index));
         nameText1.setText(patientName.getCellData(index));
         surnameText1.setText(patientSurname.getCellData(index));
         dobText.setText(patientAge.getCellData(index));

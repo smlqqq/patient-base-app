@@ -4,8 +4,18 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Patients {
 
+    private int id;
     private SimpleStringProperty ID;
     private SimpleStringProperty  firstName;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     private SimpleStringProperty  lastName;
     private SimpleStringProperty  dayOfBirth;
     private SimpleStringProperty  diagnosis;
