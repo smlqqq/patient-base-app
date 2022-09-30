@@ -66,7 +66,7 @@ public class LoginWindow {
             infoBox("Login Successfull", "Success", null);
             newScene("after_login.fxml");
         } else {
-            infoBox("Wrong login/password", "Warning", null);
+            infoBox("Warning! \nLogin and/or Password \nIs wrong.", "Warning", null);
         }
     }
     public void newScene(String window) {
@@ -77,8 +77,10 @@ public class LoginWindow {
             fxmlLoader.load();
         } catch (IOException e) {  }
 
+
             Parent root = fxmlLoader.getRoot();
             Stage stage = new Stage();
+            stage.setTitle("Main");
             stage.setScene(new Scene(root));
             stage.showAndWait();
             stage.setResizable(false);

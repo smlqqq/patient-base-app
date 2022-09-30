@@ -9,7 +9,14 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.sql.*;
 import java.util.Locale;
 
@@ -61,11 +68,7 @@ public class MainWindow extends Handler {
     int index = -1;
 
 
-    public Connection getDbConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("org.postgresql.Driver");
-        return DriverManager.getConnection("jdbc:postgresql://abul.db.elephantsql.com:5432/ckkttdhb", "ckkttdhb", "nozrUH1mHHpvvm8s9L_JPAgb1bm14w20");
 
-    }
 
     public void getDataFromDB(ActionEvent actionEvent) {
         String selectPatients = "SELECT * FROM hospital_db.patients";
@@ -107,7 +110,8 @@ public class MainWindow extends Handler {
             getPatientTable.setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY);
             getPatientTable.setItems(patients);
 
-            dbConnection.close();
+
+            Search();
 
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -132,7 +136,7 @@ public class MainWindow extends Handler {
         getDataFromDB(actionEvent);
     }
 
-    public void Search() throws SQLException, ClassNotFoundException {
+    public void Search() throws SQLException {
         
         patientID.setCellValueFactory(cellData -> cellData.getValue().IDProperty());
         patientName.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
@@ -152,12 +156,14 @@ public class MainWindow extends Handler {
                 }
                 String lowerCaseFltr = newValue.toLowerCase(Locale.ROOT);
 
-                if(patients.getFirstName().toLowerCase().contains(lowerCaseFltr)){
+                if(patients.getFirstName().toLowerCase().indexOf(lowerCaseFltr) != -1){
                     return true;
 
-                } else if (patients.getLastName().contains(lowerCaseFltr))
+                } else if (patients.getLastName().toLowerCase().indexOf(lowerCaseFltr) != -1) {
+
+
                     return true;
-                    else
+                } else
                         return false;
 
             });
@@ -195,7 +201,7 @@ public class MainWindow extends Handler {
 
     public void Update(ActionEvent actionEvent) {
         try {
-            dbConnection = getDbConnection();
+//            dbConnection = getDbConnection();
             String id = patientID.getText();
             String name = patientName.getText();
             String surname = patientSurname.getText();
@@ -206,7 +212,7 @@ public class MainWindow extends Handler {
             pst = dbConnection.prepareStatement(setSelect);
             pst.execute();
             Reload(actionEvent);
-            Search();
+
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -266,9 +272,10 @@ public class MainWindow extends Handler {
             } else {
                 mainWindow.addPatients(nameText.getText(), surnameText.getText(), dateOfBirth.getText(), diagnosisText.getText());
                 infoBox("Registration Successfull", "Success", null);
+                Reload(actionEvent);
             }
 
-            Reload(actionEvent);
+
 
     }
 
@@ -286,6 +293,8 @@ public class MainWindow extends Handler {
         dobText.setText(patientAge.getCellData(index));
         diagnosisText1.setText(patientDiagnosis.getCellData(index));
 
+
+
     }
 
     public static void infoBox(String infoMessage, String titleBar, String headerMessage) {
@@ -294,6 +303,24 @@ public class MainWindow extends Handler {
         alert.setHeaderText(headerMessage);
         alert.setContentText(infoMessage);
         alert.showAndWait();
+    }
+
+    @FXML
+    private Parent anchorRoot;
+    public void logOut(ActionEvent actionEvent) throws IOException {
+
+        Stage stage = (Stage) anchorRoot.getScene().getWindow();
+        // do what you have to do
+        stage.close();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login-gui.fxml"));
+        Parent root1 = fxmlLoader.load();
+        stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Login");
+        stage.setScene(new Scene(root1));
+        stage.show();
+        stage.setResizable(false);
+
     }
 
 }
