@@ -3,6 +3,7 @@ package com.example.patientbaseapp;
 import com.example.patientbaseapp.DB.Handler;
 import com.example.patientbaseapp.Domain.Patients;
 
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Locale;
 
+import static com.example.patientbaseapp.LoginWindow.infoBox;
 import static javafx.scene.control.TableView.CONSTRAINED_RESIZE_POLICY;
 
 public class MainWindow extends Handler {
@@ -111,11 +113,11 @@ public class MainWindow extends Handler {
             getPatientTable.setItems(patients);
 
 
+
+
             Search();
 
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -130,10 +132,10 @@ public class MainWindow extends Handler {
         getPatientTable.setItems(DB);
     }
 
-    public void Reload(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        getPatientTable.getItems().clear();
-        getPatientTable.getColumns().clear();
-        getDataFromDB(actionEvent);
+    public void Reload(ActionEvent actionEvent){
+          getPatientTable.getColumns().clear();
+          getPatientTable.refresh();
+          getDataFromDB(actionEvent);
     }
 
     public void Search() throws SQLException {
@@ -156,10 +158,10 @@ public class MainWindow extends Handler {
                 }
                 String lowerCaseFltr = newValue.toLowerCase(Locale.ROOT);
 
-                if(patients.getFirstName().toLowerCase().indexOf(lowerCaseFltr) != -1){
+                if(patients.getFirstName().toLowerCase().contains(lowerCaseFltr)){
                     return true;
 
-                } else if (patients.getLastName().toLowerCase().indexOf(lowerCaseFltr) != -1) {
+                } else if (patients.getLastName().toLowerCase().contains(lowerCaseFltr)) {
 
 
                     return true;
@@ -199,19 +201,20 @@ public class MainWindow extends Handler {
 
 
 
-    public void Update(ActionEvent actionEvent) {
+    public void Update(ActionEvent actionEvent){
         try {
-//            dbConnection = getDbConnection();
+
+            dbConnection = getDbConnection();
             String id = patientID.getText();
             String name = patientName.getText();
             String surname = patientSurname.getText();
             String diagnosis = patientDiagnosis.getText();
 
-//            String setSelect = "UPDATE hospital_db.patients set first_name = " + name + ",second_name= " + surname+ ",diagnosis= " + diagnosis;
+//          String setSelect = "UPDATE hospital_db.patients set first_name = " + name + ",second_name= " + surname+ ",diagnosis= " + diagnosis;
             String setSelect = "UPDATE hospital_db.patients set diagnosis= " + diagnosis;
             pst = dbConnection.prepareStatement(setSelect);
             pst.execute();
-            Reload(actionEvent);
+
 
 
         } catch (SQLException e) {
@@ -219,9 +222,10 @@ public class MainWindow extends Handler {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        Reload(actionEvent);
     }
 
-    public void Delete(ActionEvent actionEvent) throws ClassNotFoundException {
+    public void Delete(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
 
         String selectPatients = "DELETE from hospital_db.patients where id =?";
         try {
@@ -230,14 +234,18 @@ public class MainWindow extends Handler {
             pst.setInt(1, Integer.parseInt(idText.getText()));
             pst.execute();
             infoBox("Row deleted", "Succes", null);
-            Reload(actionEvent);
-            Search();
+
+
+//            getDataFromDB(actionEvent);
+//            Search();
 
 //            pst.execute();
 //            getDataFromDB(actionEvent);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        //            getPatientTable.getItems().clear();
+        Reload(actionEvent);
     }
 
 
@@ -297,13 +305,13 @@ public class MainWindow extends Handler {
 
     }
 
-    public static void infoBox(String infoMessage, String titleBar, String headerMessage) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(titleBar);
-        alert.setHeaderText(headerMessage);
-        alert.setContentText(infoMessage);
-        alert.showAndWait();
-    }
+//    public static void infoBox(String infoMessage, String titleBar, String headerMessage) {
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.setTitle(titleBar);
+//        alert.setHeaderText(headerMessage);
+//        alert.setContentText(infoMessage);
+//        alert.showAndWait();
+//    }
 
     @FXML
     private Parent anchorRoot;
