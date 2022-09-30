@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
+
 public class Main extends Application {
     public static Stage stg;
 
@@ -15,7 +16,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         stg = primaryStage;
         primaryStage.setResizable(false);
-        Parent root = FXMLLoader.load((getClass().getResource("login-gui.fxml")));
+        Parent root = FXMLLoader.load((Objects.requireNonNull(getClass().getResource("login-gui.fxml"))));
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root, 740, 400));
         primaryStage.show();
