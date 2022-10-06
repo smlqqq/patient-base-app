@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="740.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.patientbaseapp.LoginWindow">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="740.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.patientbaseapp.LoginWindow">
    <bottom>
-      <AnchorPane prefHeight="400.0" prefWidth="740.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="400.0" prefWidth="740.0" style="-fx-background-color: #D7DBDD;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="login_button" layoutX="301.0" layoutY="277.0" mnemonicParsing="false" onAction="#initialize" prefHeight="43.0" prefWidth="128.0" style="-fx-background-color: #ff5000;" text="LOG IN" textFill="WHITE">
+            <Button fx:id="login_button" layoutX="301.0" layoutY="265.0" mnemonicParsing="false" onAction="#initialize" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #ff5000;" text="LOG IN" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Button>
@@ -22,7 +22,10 @@
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font></Label>
-            <Button fx:id="Reg_btn" layoutX="609.0" layoutY="30.0" mnemonicParsing="false" onAction="#initialize" prefHeight="46.0" prefWidth="103.0" text="Registration" />
+            <Button fx:id="Reg_btn" layoutX="303.0" layoutY="326.0" mnemonicParsing="false" onAction="#initialize" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #7B7D7D;" text="Registration" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font></Button>
          </children>
       </AnchorPane>
    </bottom>

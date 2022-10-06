@@ -202,18 +202,29 @@ public class MainWindow extends Handler {
 
 
     public void Update(ActionEvent actionEvent){
+        index = getPatientTable.getSelectionModel().getSelectedIndex();
+        if (index <= -1) {
+            return;
+        }
+        diagnosisText1.setText(patientDiagnosis.getCellData(index));
+
+
+
         try {
+
+
 
             dbConnection = getDbConnection();
             String id = patientID.getText();
             String name = patientName.getText();
             String surname = patientSurname.getText();
-            String diagnosis = patientDiagnosis.getText();
+            String diagnosis = diagnosisText1.getText();
 
 //          String setSelect = "UPDATE hospital_db.patients set first_name = " + name + ",second_name= " + surname+ ",diagnosis= " + diagnosis;
             String setSelect = "UPDATE hospital_db.patients set diagnosis= " + diagnosis;
             pst = dbConnection.prepareStatement(setSelect);
             pst.execute();
+
 
 
 
@@ -225,7 +236,7 @@ public class MainWindow extends Handler {
         Reload(actionEvent);
     }
 
-    public void Delete(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
+    public void Delete(ActionEvent actionEvent){
 
         String selectPatients = "DELETE from hospital_db.patients where id =?";
         try {
@@ -235,16 +246,10 @@ public class MainWindow extends Handler {
             pst.execute();
             infoBox("Row deleted", "Succes", null);
 
-
-//            getDataFromDB(actionEvent);
-//            Search();
-
-//            pst.execute();
-//            getDataFromDB(actionEvent);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        //            getPatientTable.getItems().clear();
+
         Reload(actionEvent);
     }
 
@@ -266,7 +271,7 @@ public class MainWindow extends Handler {
         } catch (SQLException | ClassNotFoundException e) {    }
     }
 
-    public void addPatient(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    public void addPatient(ActionEvent actionEvent){
         MainWindow mainWindow = new MainWindow();
 
             if (nameText.getText().matches("\\d+") || nameText.getText().equals("")) {
@@ -289,7 +294,7 @@ public class MainWindow extends Handler {
 
 
 
-    public void getSelected(javafx.scene.input.MouseEvent mouseEvent) {
+    public void getSelected() {
 
         index = getPatientTable.getSelectionModel().getSelectedIndex();
         if (index <= -1) {
