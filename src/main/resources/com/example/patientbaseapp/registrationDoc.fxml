@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="740.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.patientbaseapp.Registration">
+   <center>
+      <AnchorPane prefHeight="400.0" prefWidth="740.0" BorderPane.alignment="CENTER">
+         <children>
+            <PasswordField fx:id="password_doc_reg" alignment="CENTER" depthTest="DISABLE" layoutX="62.0" layoutY="92.0" prefHeight="32.0" prefWidth="341.0" promptText="Password" />
+            <TextField fx:id="login_doc_reg" alignment="CENTER" depthTest="DISABLE" layoutX="63.0" layoutY="37.0" prefHeight="32.0" prefWidth="339.0" promptText="Login" />
+            <Button fx:id="signUp_button" layoutX="299.0" layoutY="274.0" mnemonicParsing="false" onAction="#addAccount" prefHeight="46.0" prefWidth="103.0" text="SignUp" />
+            <TextField fx:id="name_doc_reg" alignment="CENTER" depthTest="DISABLE" layoutX="63.0" layoutY="141.0" prefHeight="32.0" prefWidth="339.0" promptText="Name" />
+            <TextField fx:id="surname_doc_reg" alignment="CENTER" depthTest="DISABLE" layoutX="63.0" layoutY="193.0" prefHeight="32.0" prefWidth="339.0" promptText="Surname" />
+            <Button fx:id="back_btn" layoutX="63.0" layoutY="274.0" mnemonicParsing="false" onAction="#backStage" prefHeight="46.0" prefWidth="103.0" text="Back" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
