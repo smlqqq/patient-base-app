@@ -195,6 +195,12 @@ public class MainWindow extends Handler {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return patients;
     }
@@ -232,6 +238,12 @@ public class MainWindow extends Handler {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
+        } finally {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         Reload(actionEvent);
     }
@@ -268,7 +280,15 @@ public class MainWindow extends Handler {
             pst.setString(4, setDiagnosis);
             pst.executeUpdate();
 
-        } catch (SQLException | ClassNotFoundException e) {    }
+        } catch (SQLException | ClassNotFoundException e) {
+
+        } finally {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public void addPatient(ActionEvent actionEvent){
