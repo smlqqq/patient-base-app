@@ -119,6 +119,12 @@ public class MainWindow extends Handler {
 
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
+        }finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -260,6 +266,12 @@ public class MainWindow extends Handler {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         Reload(actionEvent);
