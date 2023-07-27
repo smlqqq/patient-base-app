@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 
-public class Start extends Application {
+public class ApplicationMain extends Application {
     public static Stage stg;
 
     @Override
@@ -21,6 +21,7 @@ public class Start extends Application {
         primaryStage.setScene(new Scene(root, 740, 400));
         primaryStage.show();
         primaryStage.setResizable(false);
+
     }
 
     public static void main(String[] args) {

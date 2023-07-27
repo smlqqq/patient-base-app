@@ -5,11 +5,10 @@ import javafx.beans.property.SimpleStringProperty;
 public class Patients {
 
     private final SimpleStringProperty ID;
-    private final SimpleStringProperty  firstName;
-    private final SimpleStringProperty  lastName;
-    private final SimpleStringProperty  dayOfBirth;
-    private final SimpleStringProperty  diagnosis;
-
+    private final SimpleStringProperty firstName;
+    private final SimpleStringProperty lastName;
+    private final SimpleStringProperty dayOfBirth;
+    private final SimpleStringProperty diagnosis;
 
 
     public SimpleStringProperty diagnosisProperty() {

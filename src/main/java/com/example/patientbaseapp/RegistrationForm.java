@@ -16,7 +16,7 @@ import java.sql.SQLException;
 
 import static com.example.patientbaseapp.LoginWindow.infoBox;
 
-public class Registration extends Handler {
+public class RegistrationForm extends Handler {
     @FXML
     private TextField login_doc_reg;
 
@@ -69,7 +69,7 @@ public class Registration extends Handler {
 
 
     public void addAccount(ActionEvent actionEvent) {
-        Registration rd = new Registration();
+        RegistrationForm rd = new RegistrationForm();
 
         if (login_doc_reg.getText().matches("\\d+") || login_doc_reg.getText().equals("")) {
             infoBox("Registration not Successfull, \nPlease, enter Login.", "Warning", null);
