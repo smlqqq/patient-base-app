@@ -1,7 +1,5 @@
 package com.example.patientbaseapp.Domain;
-
 import lombok.*;
-
 @Data
 @NoArgsConstructor
 @ToString

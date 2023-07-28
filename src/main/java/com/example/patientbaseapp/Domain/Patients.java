@@ -15,10 +15,6 @@ public class Patients {
         return diagnosis;
     }
 
-    public void setDiagnosis(String diagnosis) {
-        this.diagnosis.set(diagnosis);
-    }
-
     public SimpleStringProperty IDProperty() {
         return ID;
     }
