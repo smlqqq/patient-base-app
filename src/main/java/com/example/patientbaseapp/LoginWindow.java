@@ -34,25 +34,20 @@ public class LoginWindow {
         login_button.setOnAction(event -> {
             String accID = id_doc.getText().trim();
             String accPass = pass_doc.getText().trim();
-            if (!accID.equals("") && !accPass.equals("")) {
+            if (!accID.isEmpty() && !accPass.isEmpty()) {
                 try {
                     loginAcc(accID, accPass);
 
                 } catch (SQLException e) {
                     e.printStackTrace();
-                } catch (Exception e) {
-
                 }
 
                 } else {
                 infoBox("Enter Correct ID and/or Password", "Failed", null);
-
             }
         });
 
-        Reg_btn.setOnAction(event -> {
-            newScene("registrationDoc.fxml");
-        });
+        Reg_btn.setOnAction(event -> newScene("registrationDoc.fxml"));
 
     }
 
@@ -76,7 +71,6 @@ public class LoginWindow {
         try {
             fxmlLoader.load();
         } catch (IOException e) {  }
-
 
             Parent root = fxmlLoader.getRoot();
             Stage stage = new Stage();

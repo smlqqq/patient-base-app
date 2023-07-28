@@ -46,11 +46,11 @@ public class RegistrationForm extends Handler {
             preparedStatement.setString(3, setName);
             preparedStatement.setString(4, setSurName);
             preparedStatement.executeUpdate();
-        } catch (SQLException | ClassNotFoundException e) {   }
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException();
+        }
 
     }
-
-
 
         public void backStage (ActionEvent e) throws IOException {
             Stage stage = (Stage) back_btn.getScene().getWindow();
@@ -67,17 +67,16 @@ public class RegistrationForm extends Handler {
 
         }
 
-
     public void addAccount(ActionEvent actionEvent) {
         RegistrationForm rd = new RegistrationForm();
 
-        if (login_doc_reg.getText().matches("\\d+") || login_doc_reg.getText().equals("")) {
+        if (login_doc_reg.getText().matches("\\d+") || login_doc_reg.getText().isEmpty()) {
             infoBox("Registration not Successfull, \nPlease, enter Login.", "Warning", null);
-        } else if (password_doc_reg.getText().equals("")) {
+        } else if (password_doc_reg.getText().isEmpty()) {
             infoBox("Registration not Successfull,  \nPlease, enter Password.", "Warning", null);
-        } else if (name_doc_reg.getText().matches("\\d+") || name_doc_reg.getText().equals("")) {
+        } else if (name_doc_reg.getText().matches("\\d+") || name_doc_reg.getText().isEmpty()) {
             infoBox("Registration not Successfull,   \nPlease, enter the Name \nUse characters only. ", "Warning", null);
-        } else if (surname_doc_reg.getText().matches("\\d+") || surname_doc_reg.getText().equals("")) {
+        } else if (surname_doc_reg.getText().matches("\\d+") || surname_doc_reg.getText().isEmpty()) {
             infoBox("Registration not Successfull,   \nPlease, enter the Surname \nUse characters only.",  "Warning", null);
         } else {
             rd.setAccount(login_doc_reg.getText(), password_doc_reg.getText(), name_doc_reg.getText(), surname_doc_reg.getText());

@@ -26,7 +26,7 @@ import static javafx.scene.control.TableView.CONSTRAINED_RESIZE_POLICY;
 
 public class MainWindow extends Handler {
 
-    private ObservableList<Patients> data = FXCollections.observableArrayList();
+
     private ObservableList<Patients> DB = FXCollections.observableArrayList();
 
     @FXML
@@ -73,60 +73,37 @@ public class MainWindow extends Handler {
     public void getDataFromDB(ActionEvent actionEvent) {
         String selectPatients = "SELECT * FROM hospital_db.patients";
         try {
-
             dbConnection = getDbConnection();
             final ObservableList<Patients> patients = FXCollections.observableArrayList();
             rs = dbConnection.createStatement().executeQuery(selectPatients);
-
             while (rs.next()) {
                 String id = rs.getString("id");
                 String first_name = rs.getString("first_name");
                 String second_name = rs.getString("second_name");
                 String day_of_birth = rs.getString("day_of_birth");
                 String diagnosis = rs.getString("diagnosis");
-
-//                patients.add(new Patients(id, first_name, second_name, day_of_birth, diagnosis));
                 patients.add(new Patients(id, first_name, second_name, day_of_birth, diagnosis));
-
             }
 
             patientID = new TableColumn<>("ID");
             patientID.setCellValueFactory(cellData -> cellData.getValue().IDProperty());
             patientID.setVisible(false);
-
             patientName = new TableColumn<>("Name");
             patientName.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
-
             patientSurname = new TableColumn<>("Last Name");
             patientSurname.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
-
             patientAge = new TableColumn<>("Date Of Birth(Age)");
             patientAge.setCellValueFactory(cellData -> cellData.getValue().dayOfBirthProperty());
-
             patientDiagnosis = new TableColumn<>("Diagnosis");
             patientDiagnosis.setCellValueFactory(cellData -> cellData.getValue().diagnosisProperty());
             patientDiagnosis.setVisible(false);
-
             getPatientTable.getColumns().addAll(patientID, patientName, patientSurname, patientAge, patientDiagnosis);
             getPatientTable.setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY);
             getPatientTable.setItems(patients);
-
-
             Search();
-
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void getUpdate() {
-        patientID.setCellValueFactory(cellData -> cellData.getValue().IDProperty());
-        patientName.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
-        patientSurname.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
-        patientAge.setCellValueFactory(cellData -> cellData.getValue().dayOfBirthProperty());
-        patientDiagnosis.setCellValueFactory(cellData -> cellData.getValue().diagnosisProperty());
-        DB = getDBPatients();
-        getPatientTable.setItems(DB);
     }
 
     public void Reload(ActionEvent actionEvent) {
@@ -142,31 +119,24 @@ public class MainWindow extends Handler {
         patientSurname.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
         patientAge.setCellValueFactory(cellData -> cellData.getValue().dayOfBirthProperty());
         patientDiagnosis.setCellValueFactory(cellData -> cellData.getValue().diagnosisProperty());
-
         DB = getDBPatients();
         getPatientTable.setItems(DB);
-
         FilteredList<Patients> filteredList = new FilteredList<>(DB, b -> true);
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredList.setPredicate(patients -> {
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> filteredList.setPredicate(patients -> {
 
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-                String lowerCaseFltr = newValue.toLowerCase(Locale.ROOT);
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
+            String lowerCaseFltr = newValue.toLowerCase(Locale.ROOT);
 
-                if (patients.getFirstName().toLowerCase().contains(lowerCaseFltr)) {
-                    return true;
+            if (patients.getFirstName().toLowerCase().contains(lowerCaseFltr)) {
+                return true;
 
-                } else if (patients.getLastName().toLowerCase().contains(lowerCaseFltr)) {
-
-
-                    return true;
-                } else
-                    return false;
-
-            });
-        });
+            } else if (patients.getLastName().toLowerCase().contains(lowerCaseFltr)) {
+                return true;
+            } else
+                return false;
+        }));
 
         SortedList<Patients> patientsSortedList = new SortedList<>(filteredList);
         patientsSortedList.comparatorProperty().bind(getPatientTable.comparatorProperty());
@@ -177,7 +147,6 @@ public class MainWindow extends Handler {
     public ObservableList<Patients> getDBPatients() {
         final ObservableList<Patients> patients = FXCollections.observableArrayList();
         try {
-
             PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM hospital_db.patients");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -196,26 +165,17 @@ public class MainWindow extends Handler {
         return patients;
     }
 
-
     public void Update(ActionEvent actionEvent) {
         String setSelect = "UPDATE hospital_db.patients SET diagnosis = ? where id = ?";
 
         try {
-//            String id = patientID.getText();
-//            String diagnosis = diagnosisText1.getText();
-
             pst = dbConnection.prepareStatement(setSelect);
             pst.setInt(2, Integer.parseInt(idText.getText()));
-//            pst.setString(1, diagnosis);
             pst.setString(1, diagnosisText1.getText());
-
-
             int i = pst.executeUpdate();
             if (i == 1) {
                 infoBox("Diagnosis Updated successfully", "Success", null);
-
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -223,48 +183,16 @@ public class MainWindow extends Handler {
     }
 
 
-//        index = getPatientTable.getSelectionModel().getSelectedIndex();
-//        if (index <= -1) {
-//            return;
-//        }
-//        diagnosisText1.setText(patientDiagnosis.getCellData(index));
-//
-//
-//        try {
-//
-//
-////            dbConnection = getDbConnection();
-//            String id = patientID.getText();
-//            String name = patientName.getText();
-//            String surname = patientSurname.getText();
-//            String diagnosis = diagnosisText1.getText();
-//
-////          String setSelect = "UPDATE hospital_db.patients set first_name = " + name + ",second_name= " + surname+ ",diagnosis= " + diagnosis;
-////            String setSelect = "UPDATE hospital_db.patients SET diagnosis = " + diagnosis;
-////            String setSelect = "UPDATE hospital_db.patients SET diagnosis = '"+diagnosis+"' where id = '"+id+"' " ;
-//            String setSelect = "UPDATE hospital_db.patients SET diagnosis = '"+diagnosis+"' where id = '"+id+"' " ;
-//            pst = dbConnection.prepareStatement(setSelect);
-//
-//            pst.execute();
-//
-//
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        Reload(actionEvent);
-//    }
 
 
     public void Delete(ActionEvent actionEvent) {
 
         String selectPatients = "DELETE from hospital_db.patients where id =?";
         try {
-
             pst = dbConnection.prepareStatement(selectPatients);
             pst.setInt(1, Integer.parseInt(idText.getText()));
             pst.execute();
             infoBox("Row deleted", "Succes", null);
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -272,13 +200,9 @@ public class MainWindow extends Handler {
         Reload(actionEvent);
     }
 
-
     //PATIENTS ADD
-
-
     public void addPatients(String setFirstName, String setLastName, String setDayOfBirth, String setDiagnosis) {
         String setSelect = "insert into hospital_db.patients (first_name,second_name,day_of_birth,diagnosis)VALUES (?,?,?,?)";
-
         try {
             pst = getDbConnection().prepareStatement(setSelect);
             pst.setString(1, setFirstName);
@@ -294,21 +218,19 @@ public class MainWindow extends Handler {
     public void addPatient(ActionEvent actionEvent) {
         MainWindow mainWindow = new MainWindow();
 
-        if (nameText.getText().matches("\\d+") || nameText.getText().equals("")) {
+        if (nameText.getText().matches("\\d+") || nameText.getText().isEmpty()) {
             infoBox("Registration not Successfull, \nPlease, enter the Name. \nUse characters only.", "Warning", null);
-        } else if (surnameText.getText().matches("\\d+") || surnameText.getText().equals("")) {
+        } else if (surnameText.getText().matches("\\d+") || surnameText.getText().isEmpty()) {
             infoBox("Registration not Successfull,  \nPlease, enter the Surname \nUse characters only.", "Warning", null);
-        } else if (dateOfBirth.getText().matches("[a-zA-Z]+") || dateOfBirth.getText().equals("")) {
+        } else if (dateOfBirth.getText().matches("[a-zA-Z]+") || dateOfBirth.getText().isEmpty()) {
             infoBox("Registration not Successfull,   \nPlease, enter right DOB \nMust contains only numbers \nFormat (dd/mm/yyyy) or (dd.mm.yyyy)", "Warning", null);
-        } else if (diagnosisText.getText().equals("")) {
+        } else if (diagnosisText.getText().isEmpty()) {
             infoBox("Registration not Successfull,   \nPlease, enter Diagnosis", "Success", null);
         } else {
             mainWindow.addPatients(nameText.getText(), surnameText.getText(), dateOfBirth.getText(), diagnosisText.getText());
             infoBox("Registration Successfull", "Success", null);
             Reload(actionEvent);
         }
-
-
     }
 
 
@@ -327,19 +249,10 @@ public class MainWindow extends Handler {
 
     }
 
-//    public static void infoBox(String infoMessage, String titleBar, String headerMessage) {
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle(titleBar);
-//        alert.setHeaderText(headerMessage);
-//        alert.setContentText(infoMessage);
-//        alert.showAndWait();
-//    }
-
     @FXML
     private Parent anchorRoot;
 
     public void logOut(ActionEvent actionEvent) throws IOException {
-
         Stage stage = (Stage) anchorRoot.getScene().getWindow();
         // do what you have to do
         stage.close();
@@ -351,9 +264,7 @@ public class MainWindow extends Handler {
         stage.setScene(new Scene(root1));
         stage.show();
         stage.setResizable(false);
-
     }
-
 }
 
 
